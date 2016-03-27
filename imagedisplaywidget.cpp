@@ -2,7 +2,8 @@
 #include <QGridLayout>
 
 ImageDisplayWidget::ImageDisplayWidget(QWidget *parent) : QWidget(parent),
-    scrollArea(new QScrollArea), imageDisplayLabel(new QLabel)
+    layout(new QGridLayout),scrollArea(new QScrollArea),
+    imageDisplayLabel(new QLabel)
 {
     setupDisplayArea();
 }
@@ -11,11 +12,12 @@ ImageDisplayWidget::~ImageDisplayWidget()
 {
     delete imageDisplayLabel;
     delete scrollArea;
+    delete layout;
 }
 
 void ImageDisplayWidget::setupDisplayArea()
 {
-    QGridLayout *layout = new QGridLayout();
+
     layout->addWidget(scrollArea,0,0);
     layout->setColumnStretch(0,1);
     layout->setRowStretch(0,1);

@@ -2,6 +2,7 @@
 #define IMAGEDISPLAYWIDGET_H
 
 #include <QWidget>
+#include <QGridLayout>
 #include <QScrollArea>
 #include <QLabel>
 
@@ -18,6 +19,7 @@ signals:
 public slots:
 
 protected:
+    QGridLayout *layout;
     QScrollArea *scrollArea;
     QLabel *imageDisplayLabel;
 };
