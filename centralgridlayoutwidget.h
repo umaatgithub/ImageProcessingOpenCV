@@ -14,13 +14,16 @@ public:
     ~CentralGridLayoutWidget();
     void setupWidget();
 
+    //To be changed
+    ImageDisplayWidget *imageDisplayWidget;
+
 signals:
 
 public slots:
 
 protected:
     QGridLayout *layout;
-    ImageDisplayWidget *imageDisplayWidget;
+    //ImageDisplayWidget *imageDisplayWidget;
     ImageProcessingToolBoxWidget *imageProcessingToolBoxWidget;
 
 };
