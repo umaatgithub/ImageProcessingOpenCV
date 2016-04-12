@@ -5,6 +5,7 @@
 #include <QGridLayout>
 #include <QScrollArea>
 #include <QLabel>
+#include <QSlider>
 #include <QResizeEvent>
 
 class ImageDisplayWidget : public QWidget
@@ -16,26 +17,23 @@ public:
     void setupDisplayArea();
     void resizeEvent(QResizeEvent * event);
 
-    QString getImageFullPath() const;
-    void setImageFullPath(const QString &value);
-
     QImage getDisplayImage() const;
     void setDisplayImage(const QImage &value);
 
 signals:
-    void imageChanged(QImage image);
-    void pathChanged(QString path);
+    void imageChanged();
+
 
 public slots:
-    void updateDisplayArea(QImage image);
-    void updateDisplayImage(QString path);
+    void updateDisplayArea();
+    void updateDisplayImage(QImage image);
 
 protected:
     QGridLayout *layout;
     QScrollArea *scrollArea;
     QLabel *imageDisplayLabel;
+    QSlider *imageZoomSlider;
     QImage displayImage;
-    QString imageFullPath;
 };
 
 #endif // IMAGEDISPLAYWIDGET_H

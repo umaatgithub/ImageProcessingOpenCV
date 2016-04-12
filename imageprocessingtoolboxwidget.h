@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QToolBox>
+#include "filterwidget.h"
 
 class ImageProcessingToolBoxWidget : public QWidget
 {
@@ -13,6 +14,8 @@ public:
     ~ImageProcessingToolBoxWidget();
     void setupImageProcessingToolBox();
 
+    FilterWidget *getFilterToolSet() const;
+
 signals:
 
 public slots:
@@ -20,7 +23,7 @@ public slots:
 protected:
     QGridLayout *layout;
     QToolBox *toolBox;
-    QWidget *firstToolSet;
+    FilterWidget *filterToolSet;
     QWidget *secondToolSet;
     QWidget *thirdToolSet;
     QWidget *fourthToolSet;

@@ -14,8 +14,11 @@ public:
     ~CentralGridLayoutWidget();
     void setupWidget();
 
-    //To be changed
-    ImageDisplayWidget *imageDisplayWidget;
+    ImageDisplayWidget *getImageDisplayWidget() const;
+
+    ImageProcessingToolBoxWidget *getImageProcessingToolBoxWidget() const;
+
+    QWidget *getInfoWidget() const;
 
 signals:
 
@@ -23,8 +26,9 @@ public slots:
 
 protected:
     QGridLayout *layout;
-    //ImageDisplayWidget *imageDisplayWidget;
+    ImageDisplayWidget *imageDisplayWidget;
     ImageProcessingToolBoxWidget *imageProcessingToolBoxWidget;
+    QWidget *infoWidget;
 
 };
 

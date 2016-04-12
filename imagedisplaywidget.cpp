@@ -3,16 +3,16 @@
 
 ImageDisplayWidget::ImageDisplayWidget(QWidget *parent) : QWidget(parent),
     layout(new QGridLayout),scrollArea(new QScrollArea),
-    imageDisplayLabel(new QLabel)
+    imageDisplayLabel(new QLabel), imageZoomSlider(new QSlider)
 {
-    connect(this, SIGNAL(pathChanged(QString)),this, SLOT(updateDisplayImage(QString)));
-    connect(this, SIGNAL(imageChanged(QImage)),this, SLOT(updateDisplayArea(QImage)));
+    connect(this, SIGNAL(imageChanged()),this, SLOT(updateDisplayArea()));
     setupDisplayArea();
 }
 
 ImageDisplayWidget::~ImageDisplayWidget()
 {
     delete imageDisplayLabel;
+    delete imageZoomSlider;
     delete scrollArea;
     delete layout;
 }
@@ -23,10 +23,17 @@ void ImageDisplayWidget::setupDisplayArea()
     layout->addWidget(scrollArea,0,0);
     layout->setColumnStretch(0,1);
     layout->setRowStretch(0,1);
+
+    layout->addWidget(imageZoomSlider,1,0);
+
     setLayout(layout);
 
     scrollArea->setWidget(imageDisplayLabel);
     scrollArea->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
+
+    imageZoomSlider->setOrientation(Qt::Horizontal);
+    imageZoomSlider->setTickInterval(100);
+    //imageZoomSlider->setTickPosition(50);
 
 //    QImage imageObject;
 //    imageObject.load("D:\\Photos\\2015-11-22\\009.JPG");
@@ -36,15 +43,13 @@ void ImageDisplayWidget::setupDisplayArea()
 
 void ImageDisplayWidget::resizeEvent(QResizeEvent *event)
 {
-    updateDisplayArea(displayImage);
-    //update();
+    updateDisplayArea();
 }
 
-void ImageDisplayWidget::updateDisplayArea(QImage image)
+void ImageDisplayWidget::updateDisplayArea()
 {
-    if(!image.isNull()){
-        displayImage = image;
-        QPixmap pixmap = QPixmap::fromImage(image);
+    if(!displayImage.isNull()){
+        QPixmap pixmap = QPixmap::fromImage(displayImage);
         pixmap = pixmap.scaled(scrollArea->width(),scrollArea->height(),Qt::KeepAspectRatio);
         imageDisplayLabel->setFixedWidth(pixmap.width()-5);
         imageDisplayLabel->setFixedHeight(pixmap.height()-5);
@@ -52,10 +57,8 @@ void ImageDisplayWidget::updateDisplayArea(QImage image)
     }
 }
 
-void ImageDisplayWidget::updateDisplayImage(QString path)
+void ImageDisplayWidget::updateDisplayImage(QImage image)
 {
-    QImage image;
-    image.load(path);
     setDisplayImage(image);
 }
 
@@ -67,17 +70,6 @@ QImage ImageDisplayWidget::getDisplayImage() const
 void ImageDisplayWidget::setDisplayImage(const QImage &value)
 {
     displayImage = value;
-    emit imageChanged(value);
-}
-
-QString ImageDisplayWidget::getImageFullPath() const
-{
-    return imageFullPath;
-}
-
-void ImageDisplayWidget::setImageFullPath(const QString &value)
-{
-    imageFullPath = value;
-    emit pathChanged(value);
+    emit imageChanged();
 }
 
