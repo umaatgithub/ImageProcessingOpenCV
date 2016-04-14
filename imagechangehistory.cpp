@@ -1,8 +1,9 @@
 #include "imagechangehistory.h"
 
-ImageChangeHistory::ImageChangeHistory(QObject *parent) : QObject(parent)
+ImageChangeHistory::ImageChangeHistory(QObject *parent) : QObject(parent),
+    imageStatus(EMPTY)
 {
-    connect(this, SIGNAL(pathChanged(QString)), this, SLOT(setInitialImage(QString)));
+
 }
 
 QString ImageChangeHistory::getImagePath() const
@@ -13,7 +14,35 @@ QString ImageChangeHistory::getImagePath() const
 void ImageChangeHistory::setImagePath(const QString &value)
 {
     imagePath = value;
-    emit pathChanged(value);
+}
+
+void ImageChangeHistory::loadImage(const QString &path)
+{
+    QDir dir;
+    if(dir.exists(path)){
+        QImage image;
+        image.load(path);
+        if(!imageHistoryList.empty()){
+            imageHistoryList.clear();
+        }
+        imageHistoryList.push_back(image);
+        setImagePath(path);
+        itImageHistoryList = imageHistoryList.begin();
+        imageStatus = NOT_MODIFIED;
+        emit imageHistoryUpdated(image);
+    }
+
+}
+
+void ImageChangeHistory::saveAsImage(const QString &path)
+{
+    if(path!=""){
+        if(!imageHistoryList.empty()){
+            (*itImageHistoryList).save(path);
+            setImagePath(path);
+            imageStatus = SAVED;
+        }
+    }
 }
 
 void ImageChangeHistory::undoHistory()
@@ -36,21 +65,20 @@ void ImageChangeHistory::redoHistory()
     }
 }
 
-void ImageChangeHistory::setInitialImage(QString path)
+bool ImageChangeHistory::previousChangesSaved()
 {
-    QImage image;
-    image.load(path);
-    if(!imageHistoryList.empty()){
-        imageHistoryList.clear();
+    if(imageStatus == MODIFIED){
+        return false;
     }
-    imageHistoryList.push_back(image);
-    itImageHistoryList = imageHistoryList.begin();
-//    while(!imageQueue.empty()){
-//        imageQueue.pop();
-//    }
-//    imageQueue.push(image);
-    emit imageHistoryUpdated(image);
+    return true;
+}
 
+bool ImageChangeHistory::imageExist()
+{
+    if(imageStatus == EMPTY){
+        return false;
+    }
+    return true;
 }
 
 void ImageChangeHistory::updateImageHistory(QImage image)
@@ -61,6 +89,7 @@ void ImageChangeHistory::updateImageHistory(QImage image)
         }
         imageHistoryList.push_back(image);
         ++itImageHistoryList;
+        imageStatus = MODIFIED;
         emit imageHistoryUpdated(image);
     }
 //    imageHistoryList.push_back(image);

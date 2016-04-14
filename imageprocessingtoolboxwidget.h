@@ -5,6 +5,8 @@
 #include <QGridLayout>
 #include <QToolBox>
 #include "filterwidget.h"
+#include "morphologywidget.h"
+#include "transformationwidget.h"
 
 class ImageProcessingToolBoxWidget : public QWidget
 {
@@ -15,6 +17,8 @@ public:
     void setupImageProcessingToolBox();
 
     FilterWidget *getFilterToolSet() const;
+    MorphologyWidget *getMorphologyToolSet() const;
+    TransformationWidget *getTransformationToolSet() const;
 
 signals:
 
@@ -24,8 +28,8 @@ protected:
     QGridLayout *layout;
     QToolBox *toolBox;
     FilterWidget *filterToolSet;
-    QWidget *secondToolSet;
-    QWidget *thirdToolSet;
+    MorphologyWidget *morphologyToolSet;
+    TransformationWidget *transformationToolSet;
     QWidget *fourthToolSet;
 
 };

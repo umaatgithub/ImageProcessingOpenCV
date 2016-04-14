@@ -5,29 +5,38 @@ FilterImage::FilterImage(QObject *parent) : QObject(parent)
 
 }
 
-QImage FilterImage::normalizedBoxFilter(const QImage &inputImage, int radius)
+QImage FilterImage::applyNormalizedBoxFilter(const QImage &inputImage, int radius)
 {
     cv::Mat inputMat = QImage2Mat(inputImage);
     //imshow("Input Matrix", inputMat);
     cv::Mat outputMat = inputMat.clone();
-    blur( inputMat, outputMat, cv::Size( radius, radius  ), cv::Point(-1,-1));
+    blur( inputMat, outputMat, cv::Size(radius, radius), cv::Point(-1,-1));
     //imshow("Output Matrix", outputMat);
     return Mat2QImage(outputMat);
 }
 
-QImage FilterImage::gaussianFilter(const QImage &inputImage)
+QImage FilterImage::applyGaussianFilter(const QImage &inputImage, int radius)
 {
-    return inputImage;
+    cv::Mat inputMat = QImage2Mat(inputImage);
+    cv::Mat outputMat = inputMat.clone();
+    GaussianBlur( inputMat, outputMat, cv::Size(radius, radius), 0, 0);
+    return Mat2QImage(outputMat);
 }
 
-QImage FilterImage::medianFilter(const QImage &inputImage)
+QImage FilterImage::applyMedianFilter(const QImage &inputImage, int radius)
 {
-    return inputImage;
+    cv::Mat inputMat = QImage2Mat(inputImage);
+    cv::Mat outputMat = inputMat.clone();
+    medianBlur(inputMat, outputMat, radius);
+    return Mat2QImage(outputMat);
 }
 
-QImage FilterImage::bilateralFilter(const QImage &inputImage)
+QImage FilterImage::applyBilateralFilter(const QImage &inputImage, int radius)
 {
-    return inputImage;
+    cv::Mat inputMat = QImage2Mat(inputImage);
+    cv::Mat outputMat = inputMat.clone();
+    bilateralFilter(inputMat, outputMat, radius, radius*2.0, radius/2.0);
+    return Mat2QImage(outputMat);
 }
 
 QImage FilterImage::Mat2QImage(const cv::Mat &src)

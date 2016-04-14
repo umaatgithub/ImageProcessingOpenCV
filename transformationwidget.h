@@ -1,5 +1,5 @@
-#ifndef FILTERWIDGET_H
-#define FILTERWIDGET_H
+#ifndef TRANSFORMATIONWIDGET_H
+#define TRANSFORMATIONWIDGET_H
 
 #include <QWidget>
 #include <QGridLayout>
@@ -7,13 +7,13 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QPushButton>
-#include "filterimage.h"
+#include "transformationimage.h"
 
-class FilterWidget : public QWidget
+class TransformationWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FilterWidget(QWidget *parent = 0);
+    explicit TransformationWidget(QWidget *parent = 0);
     void setupWidget();
 
     void setInputImage(const QImage &image);
@@ -31,17 +31,17 @@ public slots:
 
 protected:
     QGridLayout *layout;
-    QLabel *filterTypeLabel;
-    QComboBox *filterTypeComboBox;
-    QLabel *filterRadiusLabel;
-    QSpinBox *filterRadiusSpinBox;
+    QLabel *transformationTypeLabel;
+    QComboBox *transformationTypeComboBox;
+    QLabel *transformationRadiusLabel;
+    QSpinBox *transformationRadiusSpinBox;
     QPushButton *applyButton;
 
-    enum FilterType{ BILATERAL=1, BOX, GAUSSIAN, MEDIAN};
+    enum TransformationType{ ROTATE_LEFT=1, ROTATE_RIGHT, SCALE_DOWN, SCALE_UP};
 
     QImage inputImage;
     QImage outputImage;
-    FilterImage filterImage;
+    TransformationImage transformationImage;
 };
 
-#endif // FILTERWIDGET_H
+#endif // TRANSFORMATIONWIDGET_H

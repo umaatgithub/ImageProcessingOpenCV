@@ -1,5 +1,5 @@
-#ifndef FILTERWIDGET_H
-#define FILTERWIDGET_H
+#ifndef MORPHOLOGYWIDGET_H
+#define MORPHOLOGYWIDGET_H
 
 #include <QWidget>
 #include <QGridLayout>
@@ -7,13 +7,13 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QPushButton>
-#include "filterimage.h"
+#include "morphologyimage.h"
 
-class FilterWidget : public QWidget
+class MorphologyWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FilterWidget(QWidget *parent = 0);
+    explicit MorphologyWidget(QWidget *parent = 0);
     void setupWidget();
 
     void setInputImage(const QImage &image);
@@ -31,17 +31,17 @@ public slots:
 
 protected:
     QGridLayout *layout;
-    QLabel *filterTypeLabel;
-    QComboBox *filterTypeComboBox;
-    QLabel *filterRadiusLabel;
-    QSpinBox *filterRadiusSpinBox;
+    QLabel *morphologyTypeLabel;
+    QComboBox *morphologyTypeComboBox;
+    QLabel *morphologyRadiusLabel;
+    QSpinBox *morphologyRadiusSpinBox;
     QPushButton *applyButton;
 
-    enum FilterType{ BILATERAL=1, BOX, GAUSSIAN, MEDIAN};
+    enum MorphologyType{ CLOSING=1, DILATE, ERODE, OPENING};
 
     QImage inputImage;
     QImage outputImage;
-    FilterImage filterImage;
+    MorphologyImage morphologyImage;
 };
 
-#endif // FILTERWIDGET_H
+#endif // MORPHOLOGYWIDGET_H

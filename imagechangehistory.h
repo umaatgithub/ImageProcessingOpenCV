@@ -3,9 +3,10 @@
 
 #include <QObject>
 #include <QImage>
-#include <queue>
+#include <QDir>
 #include <list>
-#include <map>
+#include <QDebug>
+
 
 class ImageChangeHistory : public QObject
 {
@@ -15,22 +16,25 @@ public:
 
     QString getImagePath() const;
     void setImagePath(const QString &value);
+    void loadImage(const QString &path);
+    void saveAsImage(const QString &path);
     void undoHistory();
     void redoHistory();
+    bool previousChangesSaved();
+    bool imageExist();
 
 signals:
-    void pathChanged(QString path);
     void imageHistoryUpdated(QImage image);
 
 public slots:
-    void setInitialImage(QString path);
     void updateImageHistory(QImage image);
 
 protected:
-    std::queue<QImage> imageQueue;
     std::list<QImage> imageHistoryList;
     std::list<QImage>::iterator itImageHistoryList;
     QString imagePath;
+    enum ImageStatus{EMPTY=0, NOT_MODIFIED, MODIFIED, SAVED};
+    ImageStatus imageStatus;
 };
 
 #endif // IMAGECHANGEHISTORY_H

@@ -2,7 +2,7 @@
 
 ImageProcessingToolBoxWidget::ImageProcessingToolBoxWidget(QWidget *parent) : QWidget(parent),
     layout(new QGridLayout), toolBox(new QToolBox), filterToolSet(new FilterWidget),
-    secondToolSet(new QWidget), thirdToolSet(new QWidget), fourthToolSet(new QWidget)
+    morphologyToolSet(new MorphologyWidget), transformationToolSet(new TransformationWidget), fourthToolSet(new QWidget)
 {
     setupImageProcessingToolBox();
 }
@@ -10,8 +10,8 @@ ImageProcessingToolBoxWidget::ImageProcessingToolBoxWidget(QWidget *parent) : QW
 ImageProcessingToolBoxWidget::~ImageProcessingToolBoxWidget()
 {
     delete fourthToolSet;
-    delete thirdToolSet;
-    delete secondToolSet;
+    delete transformationToolSet;
+    delete morphologyToolSet;
     delete filterToolSet;
     delete toolBox;
     delete layout;
@@ -25,8 +25,8 @@ void ImageProcessingToolBoxWidget::setupImageProcessingToolBox()
     setLayout(layout);
 
     toolBox->addItem(filterToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Filter Image");
-    toolBox->addItem(secondToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Page2");
-    toolBox->addItem(thirdToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Page3");
+    toolBox->addItem(morphologyToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Mathematical Morphology");
+    toolBox->addItem(transformationToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Transformation");
     toolBox->addItem(fourthToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Page4");
     toolBox->layout()->setSpacing(0);
 }
@@ -34,5 +34,15 @@ void ImageProcessingToolBoxWidget::setupImageProcessingToolBox()
 FilterWidget *ImageProcessingToolBoxWidget::getFilterToolSet() const
 {
     return filterToolSet;
+}
+
+MorphologyWidget *ImageProcessingToolBoxWidget::getMorphologyToolSet() const
+{
+    return morphologyToolSet;
+}
+
+TransformationWidget *ImageProcessingToolBoxWidget::getTransformationToolSet() const
+{
+    return transformationToolSet;
 }
 

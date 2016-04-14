@@ -14,10 +14,10 @@ void FilterWidget::setupWidget()
     filterTypeLabel->setText(QString("Filter Type : "));
     filterTypeLabel->setFixedHeight(15);
 
-    filterTypeComboBox->addItem(QString("Bilateral"), "Bilateral");
-    filterTypeComboBox->addItem(QString("Box"), "Box");
-    filterTypeComboBox->addItem(QString("Gaussian"), "Gaussian");
-    filterTypeComboBox->addItem(QString("Median"), "Median");
+    filterTypeComboBox->addItem(QString("Bilateral"), BILATERAL);
+    filterTypeComboBox->addItem(QString("Box"), BOX);
+    filterTypeComboBox->addItem(QString("Gaussian"), GAUSSIAN);
+    filterTypeComboBox->addItem(QString("Median"), MEDIAN);
     filterTypeComboBox->setFixedHeight(20);
 
     filterRadiusLabel->setText(QString("Filter Radius : "));
@@ -47,7 +47,18 @@ void FilterWidget::setupWidget()
 
 void FilterWidget::applyButtonClicked()
 {
-    setOutputImage(filterImage.normalizedBoxFilter(getInputImage(), 20));
+    if(filterTypeComboBox->currentData() == BILATERAL){
+        setOutputImage(filterImage.applyBilateralFilter(getInputImage(), filterRadiusSpinBox->value()));
+    }
+    else if(filterTypeComboBox->currentData() == BOX){
+        setOutputImage(filterImage.applyNormalizedBoxFilter(getInputImage(), filterRadiusSpinBox->value()));
+    }
+    else if(filterTypeComboBox->currentData() == GAUSSIAN){
+        setOutputImage(filterImage.applyGaussianFilter(getInputImage(), filterRadiusSpinBox->value()));
+    }
+    else if(filterTypeComboBox->currentData() == MEDIAN){
+        setOutputImage(filterImage.applyMedianFilter(getInputImage(), filterRadiusSpinBox->value()));
+    }
 }
 
 QImage FilterWidget::getInputImage() const

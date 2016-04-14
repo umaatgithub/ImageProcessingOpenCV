@@ -21,7 +21,11 @@ SOURCES += main.cpp\
     imageprocessingtoolboxwidget.cpp \
     filterimage.cpp \
     filterwidget.cpp \
-    imagechangehistory.cpp
+    imagechangehistory.cpp \
+    morphologyimage.cpp \
+    transformationimage.cpp \
+    morphologywidget.cpp \
+    transformationwidget.cpp
 
 HEADERS  += mainwindow.h \
     centralgridlayoutwidget.h \
@@ -29,6 +33,10 @@ HEADERS  += mainwindow.h \
     imageprocessingtoolboxwidget.h \
     filterimage.h \
     filterwidget.h \
-    imagechangehistory.h
+    imagechangehistory.h \
+    morphologyimage.h \
+    transformationimage.h \
+    morphologywidget.h \
+    transformationwidget.h
 
 FORMS    += mainwindow.ui
