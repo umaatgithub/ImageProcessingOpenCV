@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QLabel>
 #include "imagechangehistory.h"
 
 namespace Ui {
@@ -26,11 +27,18 @@ private slots:
 
     void on_actionSave_As_triggered();
 
+    void on_actionZoom_In_triggered();
+
+    void on_actionZoom_Out_triggered();
+
+    void on_percentageZoom_Changed(float value);
+
 private:
     Ui::MainWindow *ui;
 
 protected:
     ImageChangeHistory *imageChangeHistory;
+    QLabel *percentageZoomLabel;
 };
 
 #endif // MAINWINDOW_H

@@ -19,7 +19,7 @@ public:
     QImage applyClosing(QImage const& inputImage, int radius);
 
 protected:
-    QImage Mat2QImage(cv::Mat const& src);
+    QImage Mat2QImage(cv::Mat const& mat);
     cv::Mat QImage2Mat(QImage const& image);
 };
 

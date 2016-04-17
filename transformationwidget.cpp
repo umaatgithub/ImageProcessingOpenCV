@@ -14,6 +14,8 @@ TransformationWidget::TransformationWidget(QWidget *parent) : QWidget(parent), l
     transformationTypeLabel->setText(QString("Transformation Type : "));
     transformationTypeLabel->setFixedHeight(15);
 
+    transformationTypeComboBox->addItem(QString("Binary"), BINARY);
+    transformationTypeComboBox->addItem(QString("Grayscale"), GRAYSCALE);
     transformationTypeComboBox->addItem(QString("Rotate left"), ROTATE_LEFT);
     transformationTypeComboBox->addItem(QString("Rotate right"), ROTATE_RIGHT);
     transformationTypeComboBox->addItem(QString("Scale down"), SCALE_DOWN);
@@ -23,7 +25,7 @@ TransformationWidget::TransformationWidget(QWidget *parent) : QWidget(parent), l
     transformationRadiusLabel->setText(QString("Scale : "));
     transformationRadiusLabel->setFixedHeight(15);
 
-    transformationRadiusSpinBox->setRange(1, 99);
+    transformationRadiusSpinBox->setRange(1, 255);
     transformationRadiusSpinBox->setSingleStep(1);
     transformationRadiusSpinBox->setFixedHeight(20);
 
@@ -46,7 +48,13 @@ TransformationWidget::TransformationWidget(QWidget *parent) : QWidget(parent), l
 
   void TransformationWidget::applyButtonClicked()
   {
-    if(transformationTypeComboBox->currentData() == ROTATE_LEFT){
+    if(transformationTypeComboBox->currentData() == BINARY){
+        setOutputImage(transformationImage.applyBinaryTransformation(getInputImage(), transformationRadiusSpinBox->value()));
+    }
+    else if(transformationTypeComboBox->currentData() == GRAYSCALE){
+        setOutputImage(transformationImage.applyGrayscaleTransformation(getInputImage()));
+    }
+    else if(transformationTypeComboBox->currentData() == ROTATE_LEFT){
         setOutputImage(transformationImage.applyRotateLeft(getInputImage(), transformationRadiusSpinBox->value()));
     }
     else if(transformationTypeComboBox->currentData() == ROTATE_RIGHT){

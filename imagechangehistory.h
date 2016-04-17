@@ -24,7 +24,7 @@ public:
     bool imageExist();
 
 signals:
-    void imageHistoryUpdated(QImage image);
+    void imageHistoryUpdated(QImage image, bool newImage=false);
 
 public slots:
     void updateImageHistory(QImage image);

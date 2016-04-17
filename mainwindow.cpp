@@ -5,17 +5,23 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow), imageChangeHistory(new ImageChangeHistory)
+    ui(new Ui::MainWindow), imageChangeHistory(new ImageChangeHistory),
+    percentageZoomLabel(new QLabel)
 {
     ui->setupUi(this);
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage)),
-            ui->centralWidget->getImageDisplayWidget(), SLOT(updateDisplayImage(QImage)));
 
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage)),
+    ui->statusBar->addPermanentWidget(percentageZoomLabel);
+
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
+            ui->centralWidget->getImageDisplayWidget(), SLOT(updateDisplayImage(QImage, bool)));
+
+    connect(ui->centralWidget->getImageDisplayWidget(),SIGNAL(percentageZoomChanged(float)), this, SLOT(on_percentageZoom_Changed(float)));
+
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
             ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SLOT(updateInputImage(QImage)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage)),
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
             ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SLOT(updateInputImage(QImage)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage)),
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
             ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SLOT(updateInputImage(QImage)));
 
 
@@ -41,7 +47,7 @@ void MainWindow::on_actionNew_triggered()
     }
     else{
         QMessageBox::StandardButton response;
-        response = QMessageBox::question(this, QString("Image Processing"), QString("Do you want to save changes to the image?"),
+        response = QMessageBox::question(this, QString("Image Processing"), QString("Do you want to save changes to the image?               "),
                               QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Save);
         if(response == QMessageBox::Save){
             emit ui->actionSave_As->trigger();
@@ -74,4 +80,19 @@ void MainWindow::on_actionSave_As_triggered()
         QString filePath = QFileDialog::getSaveFileName(this, QString("Save Image"), imageChangeHistory->getImagePath(), QString("Images (*.png *.jpg *.bmp)"));
         imageChangeHistory->saveAsImage(filePath);
     }
+}
+
+void MainWindow::on_actionZoom_In_triggered()
+{
+    ui->centralWidget->getImageDisplayWidget()->zoomInDisplayImage();
+}
+
+void MainWindow::on_actionZoom_Out_triggered()
+{
+    ui->centralWidget->getImageDisplayWidget()->zoomOutDisplayImage();
+}
+
+void MainWindow::on_percentageZoom_Changed(float value)
+{
+    percentageZoomLabel->setText(QString("Image Zoom : ")+QString::number(value).append("%   "));
 }

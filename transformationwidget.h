@@ -37,7 +37,7 @@ protected:
     QSpinBox *transformationRadiusSpinBox;
     QPushButton *applyButton;
 
-    enum TransformationType{ ROTATE_LEFT=1, ROTATE_RIGHT, SCALE_DOWN, SCALE_UP};
+    enum TransformationType{ BINARY=1, GRAYSCALE, ROTATE_LEFT, ROTATE_RIGHT, SCALE_DOWN, SCALE_UP};
 
     QImage inputImage;
     QImage outputImage;

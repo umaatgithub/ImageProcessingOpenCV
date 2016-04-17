@@ -3,7 +3,7 @@
 
 ImageDisplayWidget::ImageDisplayWidget(QWidget *parent) : QWidget(parent),
     layout(new QGridLayout),scrollArea(new QScrollArea),
-    imageDisplayLabel(new QLabel), imageZoomSlider(new QSlider)
+    imageDisplayLabel(new QLabel),  percentageZoom(0.0)
 {
     connect(this, SIGNAL(imageChanged()),this, SLOT(updateDisplayArea()));
     setupDisplayArea();
@@ -12,7 +12,6 @@ ImageDisplayWidget::ImageDisplayWidget(QWidget *parent) : QWidget(parent),
 ImageDisplayWidget::~ImageDisplayWidget()
 {
     delete imageDisplayLabel;
-    delete imageZoomSlider;
     delete scrollArea;
     delete layout;
 }
@@ -24,42 +23,77 @@ void ImageDisplayWidget::setupDisplayArea()
     layout->setColumnStretch(0,1);
     layout->setRowStretch(0,1);
 
-    layout->addWidget(imageZoomSlider,1,0);
-
     setLayout(layout);
 
     scrollArea->setWidget(imageDisplayLabel);
     scrollArea->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
 
-    imageZoomSlider->setOrientation(Qt::Horizontal);
-    imageZoomSlider->setTickInterval(100);
-    //imageZoomSlider->setTickPosition(50);
-
-//    QImage imageObject;
-//    imageObject.load("D:\\Photos\\2015-11-22\\009.JPG");
-//    updateDisplayArea(imageObject);
-
 }
 
-void ImageDisplayWidget::resizeEvent(QResizeEvent *event)
+float ImageDisplayWidget::zoomInDisplayImage()
 {
-    updateDisplayArea();
+    float currentZoom = getPercentageZoom();
+    if(currentZoom >= 12.5 && currentZoom < 200){
+        setPercentageZoom(currentZoom*2);
+        updateDisplayArea();
+    }
+    else if(currentZoom >= 200){
+        setPercentageZoom(currentZoom+100);
+        updateDisplayArea();
+    }
+    return getPercentageZoom();
+
+
 }
+
+float ImageDisplayWidget::zoomOutDisplayImage()
+{
+    float currentZoom = getPercentageZoom();
+    if(currentZoom > 12.5 && currentZoom <= 200){
+        setPercentageZoom(currentZoom/2);
+        updateDisplayArea();
+    }
+    else if(currentZoom > 200){
+        setPercentageZoom(currentZoom-100);
+        updateDisplayArea();
+    }
+    return getPercentageZoom();
+}
+
+//void ImageDisplayWidget::resizeEvent(QResizeEvent *event)
+//{
+    //updateDisplayArea();
+//}
 
 void ImageDisplayWidget::updateDisplayArea()
 {
     if(!displayImage.isNull()){
         QPixmap pixmap = QPixmap::fromImage(displayImage);
-        pixmap = pixmap.scaled(scrollArea->width(),scrollArea->height(),Qt::KeepAspectRatio);
-        imageDisplayLabel->setFixedWidth(pixmap.width()-5);
-        imageDisplayLabel->setFixedHeight(pixmap.height()-5);
+        pixmap = pixmap.scaled(pixmap.width()*getPercentageZoom()/100,pixmap.height()*getPercentageZoom()/100,Qt::KeepAspectRatio);
+        imageDisplayLabel->setFixedWidth(pixmap.width()+ 10);
+        imageDisplayLabel->setFixedHeight(pixmap.height()+ 10);
         imageDisplayLabel->setPixmap(pixmap);
+        imageDisplayLabel->setAlignment(Qt::AlignVCenter|Qt::AlignHCenter);
     }
 }
 
-void ImageDisplayWidget::updateDisplayImage(QImage image)
+void ImageDisplayWidget::updateDisplayImage(QImage image, bool newImage)
 {
+    if(newImage==true){
+        setPercentageZoom(100.0);
+    }
     setDisplayImage(image);
+}
+
+float ImageDisplayWidget::getPercentageZoom() const
+{
+    return percentageZoom;
+}
+
+void ImageDisplayWidget::setPercentageZoom(float value)
+{
+    percentageZoom = value;
+    emit percentageZoomChanged(value);
 }
 
 QImage ImageDisplayWidget::getDisplayImage() const

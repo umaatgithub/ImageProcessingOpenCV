@@ -29,7 +29,7 @@ void ImageChangeHistory::loadImage(const QString &path)
         setImagePath(path);
         itImageHistoryList = imageHistoryList.begin();
         imageStatus = NOT_MODIFIED;
-        emit imageHistoryUpdated(image);
+        emit imageHistoryUpdated(image, true);
     }
 
 }

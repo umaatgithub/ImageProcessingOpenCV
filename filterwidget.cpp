@@ -30,16 +30,16 @@ void FilterWidget::setupWidget()
     applyButton->setText(QString("Apply Changes"));
 
     layout->addWidget(filterTypeLabel, 0, 0);
-    layout->addWidget(filterTypeComboBox, 1, 0);
-    layout->addWidget(filterRadiusLabel, 2, 0);
-    layout->addWidget(filterRadiusSpinBox, 3, 0);
-    layout->addWidget(applyButton, 4, 0);
+    layout->addWidget(filterTypeComboBox, 0, 1);
+    layout->addWidget(filterRadiusLabel, 1, 0);
+    layout->addWidget(filterRadiusSpinBox, 1, 1);
+    layout->addWidget(applyButton, 2, 0, 2, 2);
 
-    layout->setRowMinimumHeight(0, 15);
-    layout->setRowMinimumHeight(1, 20);
-    layout->setRowMinimumHeight(2, 15);
-    layout->setRowMinimumHeight(3, 20);
-    layout->setRowStretch(4, 5);
+    layout->setRowMinimumHeight(0, 30);
+    layout->setRowMinimumHeight(1, 30);
+//    layout->setRowMinimumHeight(2, 15);
+//    layout->setRowMinimumHeight(3, 20);
+//    layout->setRowStretch(4, 5);
 
 
     setLayout(layout);

@@ -17,15 +17,15 @@ CentralGridLayoutWidget::~CentralGridLayoutWidget()
 
 void CentralGridLayoutWidget::setupWidget()
 {
-  layout->addWidget(imageDisplayWidget,0,0,2,2);
+  layout->addWidget(imageDisplayWidget,0,0,3,2);
   layout->addWidget(imageProcessingToolBoxWidget,0,2);
   layout->addWidget(infoWidget,1,2);
 
   layout->setColumnMinimumWidth(0,300);
-  layout->setColumnMinimumWidth(2,300);
+  layout->setColumnMinimumWidth(2,250);
 
-  layout->setRowMinimumHeight(0,300);
-  layout->setRowMinimumHeight(1,300);
+  layout->setRowMinimumHeight(0,250);
+  layout->setRowMinimumHeight(1,250);
 
   layout->setColumnStretch(0,1);
 
