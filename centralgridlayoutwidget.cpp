@@ -2,7 +2,7 @@
 
 CentralGridLayoutWidget::CentralGridLayoutWidget(QWidget *parent) : QWidget(parent),
     layout(new QGridLayout), imageDisplayWidget(new ImageDisplayWidget),
-    imageProcessingToolBoxWidget(new ImageProcessingToolBoxWidget), infoWidget(new QWidget)
+    imageProcessingToolBoxWidget(new ImageProcessingToolBoxWidget), infoWidget(new InfoWidget)
 {
     setupWidget();
 }
@@ -24,8 +24,8 @@ void CentralGridLayoutWidget::setupWidget()
   layout->setColumnMinimumWidth(0,300);
   layout->setColumnMinimumWidth(2,250);
 
-  layout->setRowMinimumHeight(0,250);
-  layout->setRowMinimumHeight(1,250);
+  layout->setRowMinimumHeight(0,270);
+  layout->setRowMinimumHeight(1,200);
 
   layout->setColumnStretch(0,1);
 

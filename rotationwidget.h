@@ -1,5 +1,5 @@
-#ifndef TRANSFORMATIONWIDGET_H
-#define TRANSFORMATIONWIDGET_H
+#ifndef ROTATIONWIDGET_H
+#define ROTATIONWIDGET_H
 
 #include <QWidget>
 #include <QGridLayout>
@@ -7,13 +7,13 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QPushButton>
-#include "transformationimage.h"
+#include "rotationimage.h"
 
-class TransformationWidget : public QWidget
+class RotationWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TransformationWidget(QWidget *parent = 0);
+    explicit RotationWidget(QWidget *parent = 0);
     void setupWidget();
 
     void setInputImage(const QImage &image);
@@ -31,17 +31,17 @@ public slots:
 
 protected:
     QGridLayout *layout;
-    QLabel *transformationTypeLabel;
-    QComboBox *transformationTypeComboBox;
-    QLabel *transformationRadiusLabel;
-    QSpinBox *transformationRadiusSpinBox;
+    QLabel *rotationTypeLabel;
+    QComboBox *rotationTypeComboBox;
+    QLabel *rotationRadiusLabel;
+    QSpinBox *rotationRadiusSpinBox;
     QPushButton *applyButton;
 
-    enum TransformationType{ BINARY=1, GRAYSCALE};
+    enum RotationType{ ROTATE_LEFT=1, ROTATE_RIGHT};
 
     QImage inputImage;
     QImage outputImage;
-    TransformationImage transformationImage;
+    RotationImage rotationImage;
 };
 
-#endif // TRANSFORMATIONWIDGET_H
+#endif // ROTATIONWIDGET_H

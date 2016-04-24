@@ -5,6 +5,7 @@
 #include <QGridLayout>
 #include "imagedisplaywidget.h"
 #include "imageprocessingtoolboxwidget.h"
+#include "infowidget.h"
 
 class CentralGridLayoutWidget : public QWidget
 {
@@ -28,7 +29,7 @@ protected:
     QGridLayout *layout;
     ImageDisplayWidget *imageDisplayWidget;
     ImageProcessingToolBoxWidget *imageProcessingToolBoxWidget;
-    QWidget *infoWidget;
+    InfoWidget *infoWidget;
 
 };
 

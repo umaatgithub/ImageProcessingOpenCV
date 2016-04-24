@@ -1,5 +1,5 @@
-#ifndef TRANSFORMATIONWIDGET_H
-#define TRANSFORMATIONWIDGET_H
+#ifndef SCALEWIDGET_H
+#define SCALEWIDGET_H
 
 #include <QWidget>
 #include <QGridLayout>
@@ -7,13 +7,13 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QPushButton>
-#include "transformationimage.h"
+#include "scaleimage.h"
 
-class TransformationWidget : public QWidget
+class ScaleWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TransformationWidget(QWidget *parent = 0);
+    explicit ScaleWidget(QWidget *parent = 0);
     void setupWidget();
 
     void setInputImage(const QImage &image);
@@ -31,17 +31,17 @@ public slots:
 
 protected:
     QGridLayout *layout;
-    QLabel *transformationTypeLabel;
-    QComboBox *transformationTypeComboBox;
-    QLabel *transformationRadiusLabel;
-    QSpinBox *transformationRadiusSpinBox;
+    QLabel *scaleTypeLabel;
+    QComboBox *scaleTypeComboBox;
+    QLabel *scaleRadiusLabel;
+    QSpinBox *scaleRadiusSpinBox;
     QPushButton *applyButton;
 
-    enum TransformationType{ BINARY=1, GRAYSCALE};
+    enum ScaleType{ SCALE_DOWN=1, SCALE_UP};
 
     QImage inputImage;
     QImage outputImage;
-    TransformationImage transformationImage;
+    ScaleImage scaleImage;
 };
 
-#endif // TRANSFORMATIONWIDGET_H
+#endif // SCALEWIDGET_H

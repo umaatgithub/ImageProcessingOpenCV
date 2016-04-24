@@ -25,7 +25,12 @@ SOURCES += main.cpp\
     morphologyimage.cpp \
     transformationimage.cpp \
     morphologywidget.cpp \
-    transformationwidget.cpp
+    transformationwidget.cpp \
+    rotationimage.cpp \
+    scaleimage.cpp \
+    rotationwidget.cpp \
+    scalewidget.cpp \
+    infowidget.cpp
 
 HEADERS  += mainwindow.h \
     centralgridlayoutwidget.h \
@@ -37,6 +42,11 @@ HEADERS  += mainwindow.h \
     morphologyimage.h \
     transformationimage.h \
     morphologywidget.h \
-    transformationwidget.h
+    transformationwidget.h \
+    rotationimage.h \
+    scaleimage.h \
+    rotationwidget.h \
+    scalewidget.h \
+    infowidget.h
 
 FORMS    += mainwindow.ui

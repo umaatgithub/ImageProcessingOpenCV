@@ -15,10 +15,6 @@ public:
     explicit TransformationImage(QObject *parent = 0);
     QImage applyBinaryTransformation(QImage const& inputImage, int radius);
     QImage applyGrayscaleTransformation(QImage const& inputImage);
-    QImage applyRotateLeft(QImage const& inputImage, int radius);
-    QImage applyRotateRight(QImage const& inputImage, int radius);
-    QImage applyScaleDown(QImage const& inputImage, int radius);
-    QImage applyScaleUp(QImage const& inputImage, int radius);
 
 protected:
     QImage Mat2QImage(cv::Mat const& mat);

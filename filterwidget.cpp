@@ -12,20 +12,20 @@ FilterWidget::FilterWidget(QWidget *parent) : QWidget(parent), layout(new QGridL
 void FilterWidget::setupWidget()
 {
     filterTypeLabel->setText(QString("Filter Type : "));
-    filterTypeLabel->setFixedHeight(15);
+    filterTypeLabel->setFixedHeight(25);
 
     filterTypeComboBox->addItem(QString("Bilateral"), BILATERAL);
     filterTypeComboBox->addItem(QString("Box"), BOX);
     filterTypeComboBox->addItem(QString("Gaussian"), GAUSSIAN);
     filterTypeComboBox->addItem(QString("Median"), MEDIAN);
-    filterTypeComboBox->setFixedHeight(20);
+    filterTypeComboBox->setFixedHeight(25);
 
     filterRadiusLabel->setText(QString("Filter Radius : "));
-    filterRadiusLabel->setFixedHeight(15);
+    filterRadiusLabel->setFixedHeight(25);
 
     filterRadiusSpinBox->setRange(1, 31);
     filterRadiusSpinBox->setSingleStep(2);
-    filterRadiusSpinBox->setFixedHeight(20);
+    filterRadiusSpinBox->setFixedHeight(25);
 
     applyButton->setText(QString("Apply Changes"));
 

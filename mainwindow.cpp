@@ -23,6 +23,10 @@ MainWindow::MainWindow(QWidget *parent) :
             ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SLOT(updateInputImage(QImage)));
     connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
             ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SLOT(updateInputImage(QImage)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getRotationToolSet(), SLOT(updateInputImage(QImage)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getScaleToolSet(), SLOT(updateInputImage(QImage)));
 
 
     connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SIGNAL(outputImageChanged(QImage)),
@@ -30,6 +34,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SIGNAL(outputImageChanged(QImage)),
             imageChangeHistory, SLOT(updateImageHistory(QImage)));
     connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SIGNAL(outputImageChanged(QImage)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage)));
+    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getRotationToolSet(), SIGNAL(outputImageChanged(QImage)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage)));
+    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getScaleToolSet(), SIGNAL(outputImageChanged(QImage)),
             imageChangeHistory, SLOT(updateImageHistory(QImage)));
 
 }

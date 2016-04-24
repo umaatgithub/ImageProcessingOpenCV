@@ -7,6 +7,8 @@
 #include "filterwidget.h"
 #include "morphologywidget.h"
 #include "transformationwidget.h"
+#include "rotationwidget.h"
+#include "scalewidget.h"
 
 class ImageProcessingToolBoxWidget : public QWidget
 {
@@ -19,6 +21,8 @@ public:
     FilterWidget *getFilterToolSet() const;
     MorphologyWidget *getMorphologyToolSet() const;
     TransformationWidget *getTransformationToolSet() const;
+    RotationWidget *getRotationToolSet() const;
+    ScaleWidget *getScaleToolSet() const;
 
 signals:
 
@@ -30,7 +34,8 @@ protected:
     FilterWidget *filterToolSet;
     MorphologyWidget *morphologyToolSet;
     TransformationWidget *transformationToolSet;
-    QWidget *fourthToolSet;
+    RotationWidget *rotationToolSet;
+    ScaleWidget *scaleToolSet;
 
 };
 
