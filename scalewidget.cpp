@@ -12,44 +12,48 @@ ScaleWidget::ScaleWidget(QWidget *parent) : QWidget(parent), layout(new QGridLay
 void ScaleWidget::setupWidget()
   {
     scaleTypeLabel->setText(QString("Scale Type : "));
-    scaleTypeLabel->setFixedHeight(15);
+    scaleTypeLabel->setFixedHeight(25);
 
     scaleTypeComboBox->addItem(QString("Scale down"), SCALE_DOWN);
     scaleTypeComboBox->addItem(QString("Scale up"), SCALE_UP);
-    scaleTypeComboBox->setFixedHeight(20);
+    scaleTypeComboBox->setFixedHeight(25);
 
     scaleRadiusLabel->setText(QString("Scale : "));
-    scaleRadiusLabel->setFixedHeight(15);
+    scaleRadiusLabel->setFixedHeight(25);
 
     scaleRadiusSpinBox->setRange(1, 100);
     scaleRadiusSpinBox->setSingleStep(1);
-    scaleRadiusSpinBox->setFixedHeight(20);
+    scaleRadiusSpinBox->setFixedHeight(25);
+    scaleRadiusSpinBox->setSuffix(QString("%"));
 
     applyButton->setText(QString("Apply Changes"));
+    applyButton->setFixedHeight(25);
 
     layout->addWidget(scaleTypeLabel, 0, 0);
-    layout->addWidget(scaleTypeComboBox, 1, 0);
-    layout->addWidget(scaleRadiusLabel, 2, 0);
-    layout->addWidget(scaleRadiusSpinBox, 3, 0);
-    layout->addWidget(applyButton, 4, 0);
+    layout->addWidget(scaleTypeComboBox, 0, 1);
+    layout->addWidget(scaleRadiusLabel, 1, 0);
+    layout->addWidget(scaleRadiusSpinBox, 1, 1);
+    layout->addWidget(applyButton, 2, 0, 2, 2);
 
-    layout->setRowMinimumHeight(0, 15);
-    layout->setRowMinimumHeight(1, 20);
-    layout->setRowMinimumHeight(2, 15);
-    layout->setRowMinimumHeight(3, 20);
-    layout->setRowStretch(4, 5);
+    layout->setRowMinimumHeight(0, 30);
+    layout->setRowMinimumHeight(1, 30);
 
     setLayout(layout);
   }
 
   void ScaleWidget::applyButtonClicked()
   {
+      try{
     if(scaleTypeComboBox->currentData() == SCALE_DOWN){
         setOutputImage(scaleImage.applyScaleDown(getInputImage(), scaleRadiusSpinBox->value()));
     }
     else if(scaleTypeComboBox->currentData() == SCALE_UP){
         setOutputImage(scaleImage.applyScaleUp(getInputImage(), scaleRadiusSpinBox->value()));
     }
+      }
+      catch(std::exception exp){
+          std::cout<< exp.what();
+      }
   }
 
   QImage ScaleWidget::getInputImage() const
@@ -73,7 +77,7 @@ void ScaleWidget::setupWidget()
     emit outputImageChanged(image);
   }
 
-  void ScaleWidget::updateInputImage(QImage image)
+  void ScaleWidget::updateInputImage(QImage &image)
   {
     setInputImage(image);
   }

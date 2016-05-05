@@ -31,13 +31,12 @@ signals:
 
 public slots:
     void updateDisplayArea();
-    void updateDisplayImage(QImage image, bool newImage);
+    void updateDisplayImage(QImage &image, bool newImage);
 
 protected:
     QGridLayout *layout;
     QScrollArea *scrollArea;
     QLabel *imageDisplayLabel;
-    QSlider *imageZoomSlider;
     QImage displayImage;
     float percentageZoom;
 };

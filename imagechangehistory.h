@@ -24,7 +24,8 @@ public:
     bool imageExist();
 
 signals:
-    void imageHistoryUpdated(QImage image, bool newImage=false);
+    void imageHistoryUpdated(QImage &image, bool newImage=false);
+    void imagePathUpdated(QString &path);
 
 public slots:
     void updateImageHistory(QImage image);

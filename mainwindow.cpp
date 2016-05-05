@@ -12,21 +12,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->statusBar->addPermanentWidget(percentageZoomLabel);
 
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
-            ui->centralWidget->getImageDisplayWidget(), SLOT(updateDisplayImage(QImage, bool)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
+            ui->centralWidget->getImageDisplayWidget(), SLOT(updateDisplayImage(QImage&, bool)));
 
     connect(ui->centralWidget->getImageDisplayWidget(),SIGNAL(percentageZoomChanged(float)), this, SLOT(on_percentageZoom_Changed(float)));
 
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SLOT(updateInputImage(QImage)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SLOT(updateInputImage(QImage)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SLOT(updateInputImage(QImage)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getRotationToolSet(), SLOT(updateInputImage(QImage)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getScaleToolSet(), SLOT(updateInputImage(QImage)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SLOT(updateInputImage(QImage&)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SLOT(updateInputImage(QImage&)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SLOT(updateInputImage(QImage&)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getRotationToolSet(), SLOT(updateInputImage(QImage&)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getScaleToolSet(), SLOT(updateInputImage(QImage&)));
+
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
+            ui->centralWidget->getInfoWidget(), SLOT(updateImageProperty(QImage&)));
+    connect(imageChangeHistory, SIGNAL(imagePathUpdated(QString&)),
+            ui->centralWidget->getInfoWidget(), SLOT(updateImagePath(QString&)));
 
 
     connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SIGNAL(outputImageChanged(QImage)),
@@ -103,4 +108,5 @@ void MainWindow::on_actionZoom_Out_triggered()
 void MainWindow::on_percentageZoom_Changed(float value)
 {
     percentageZoomLabel->setText(QString("Image Zoom : ")+QString::number(value).append("%   "));
+    ui->statusBar->showMessage(QString("Hello World!!!"), 2000);
 }

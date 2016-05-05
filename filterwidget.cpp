@@ -28,6 +28,7 @@ void FilterWidget::setupWidget()
     filterRadiusSpinBox->setFixedHeight(25);
 
     applyButton->setText(QString("Apply Changes"));
+    applyButton->setFixedHeight(25);
 
     layout->addWidget(filterTypeLabel, 0, 0);
     layout->addWidget(filterTypeComboBox, 0, 1);
@@ -47,6 +48,7 @@ void FilterWidget::setupWidget()
 
 void FilterWidget::applyButtonClicked()
 {
+    try{
     if(filterTypeComboBox->currentData() == BILATERAL){
         setOutputImage(filterImage.applyBilateralFilter(getInputImage(), filterRadiusSpinBox->value()));
     }
@@ -58,6 +60,13 @@ void FilterWidget::applyButtonClicked()
     }
     else if(filterTypeComboBox->currentData() == MEDIAN){
         setOutputImage(filterImage.applyMedianFilter(getInputImage(), filterRadiusSpinBox->value()));
+    }
+    }
+    catch (const char* msg) {
+         std::cerr << msg << std::endl;
+       }
+    catch(std::exception exp){
+        std::cout<< exp.what();
     }
 }
 
@@ -82,7 +91,7 @@ void FilterWidget::setOutputImage(const QImage &image)
     emit outputImageChanged(image);
 }
 
-void FilterWidget::updateInputImage(QImage image)
+void FilterWidget::updateInputImage(QImage &image)
 {
     setInputImage(image);
 }

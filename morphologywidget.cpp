@@ -12,41 +12,39 @@ MorphologyWidget::MorphologyWidget(QWidget *parent) : QWidget(parent), layout(ne
 void MorphologyWidget::setupWidget()
 {
   morphologyTypeLabel->setText(QString("Morphology Type : "));
-  morphologyTypeLabel->setFixedHeight(15);
+  morphologyTypeLabel->setFixedHeight(25);
 
   morphologyTypeComboBox->addItem(QString("Closing"), CLOSING);
   morphologyTypeComboBox->addItem(QString("Dilate"), DILATE);
   morphologyTypeComboBox->addItem(QString("Erode"), ERODE);
   morphologyTypeComboBox->addItem(QString("Opening"), OPENING);
-  morphologyTypeComboBox->setFixedHeight(20);
+  morphologyTypeComboBox->setFixedHeight(25);
 
   morphologyRadiusLabel->setText(QString("Structuring Element Radius : "));
-  morphologyRadiusLabel->setFixedHeight(15);
+  morphologyRadiusLabel->setFixedHeight(25);
 
   morphologyRadiusSpinBox->setRange(2, 40);
   morphologyRadiusSpinBox->setSingleStep(1);
-  morphologyRadiusSpinBox->setFixedHeight(20);
+  morphologyRadiusSpinBox->setFixedHeight(25);
 
   applyButton->setText(QString("Apply Changes"));
+  applyButton->setFixedHeight(25);
 
   layout->addWidget(morphologyTypeLabel, 0, 0);
-  layout->addWidget(morphologyTypeComboBox, 1, 0);
-  layout->addWidget(morphologyRadiusLabel, 2, 0);
-  layout->addWidget(morphologyRadiusSpinBox, 3, 0);
-  layout->addWidget(applyButton, 4, 0);
+  layout->addWidget(morphologyTypeComboBox, 0, 1);
+  layout->addWidget(morphologyRadiusLabel, 1, 0);
+  layout->addWidget(morphologyRadiusSpinBox, 1, 1);
+  layout->addWidget(applyButton, 2, 0, 2, 2);
 
-  layout->setRowMinimumHeight(0, 15);
-  layout->setRowMinimumHeight(1, 20);
-  layout->setRowMinimumHeight(2, 15);
-  layout->setRowMinimumHeight(3, 20);
-  layout->setRowStretch(4, 5);
-
+  layout->setRowMinimumHeight(0, 30);
+  layout->setRowMinimumHeight(1, 30);
 
   setLayout(layout);
 }
 
 void MorphologyWidget::applyButtonClicked()
 {
+    try{
   if(morphologyTypeComboBox->currentData() == CLOSING){
       setOutputImage(morphologyImage.applyClosing(getInputImage(), morphologyRadiusSpinBox->value()));
   }
@@ -59,6 +57,10 @@ void MorphologyWidget::applyButtonClicked()
   else if(morphologyTypeComboBox->currentData() == OPENING){
       setOutputImage(morphologyImage.applyOpening(getInputImage(), morphologyRadiusSpinBox->value()));
   }
+    }
+    catch(std::exception exp){
+        std::cout<< exp.what();
+    }
 }
 
 QImage MorphologyWidget::getInputImage() const
@@ -82,7 +84,7 @@ void MorphologyWidget::setOutputImage(const QImage &image)
   emit outputImageChanged(image);
 }
 
-void MorphologyWidget::updateInputImage(QImage image)
+void MorphologyWidget::updateInputImage(QImage &image)
 {
   setInputImage(image);
 }

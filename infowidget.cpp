@@ -15,47 +15,28 @@ InfoWidget::InfoWidget(QWidget *parent) : QWidget(parent), layout(new QGridLayou
 
 void InfoWidget::setupWidget()
 {
-    infoTable->setEnabled(false);
     infoTable->verticalHeader()->setVisible(false);
     infoTable->setRowCount(5);
     infoTable->setColumnCount(2);
+    infoTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    QTableWidgetItem *qtablewidgetitemheader = new QTableWidgetItem();
-    qtablewidgetitemheader->setText("Property");
-    infoTable->setHorizontalHeaderItem(0, qtablewidgetitemheader);
+    QTableWidgetItem *propertyColumnHeader = new QTableWidgetItem();
+    propertyColumnHeader->setText("Property");
+    infoTable->setHorizontalHeaderItem(0, propertyColumnHeader);
 
-    QTableWidgetItem *qtablewidgetitemheader1 = new QTableWidgetItem();
-    qtablewidgetitemheader1->setText("Value");
-    infoTable->setHorizontalHeaderItem(1, qtablewidgetitemheader1);
+    QTableWidgetItem *valueColumnHeader = new QTableWidgetItem();
+    valueColumnHeader->setText("Value");
+    infoTable->setHorizontalHeaderItem(1, valueColumnHeader);
 
     for(int i=0; i<5 ; i++){
         QTableWidgetItem *qtablewidgetitem = new QTableWidgetItem();
         qtablewidgetitem->setText(imagePropertyLabel[i]);
         infoTable->setItem(i, 0, qtablewidgetitem);
+
+        qtablewidgetitem = new QTableWidgetItem();
+        qtablewidgetitem->setText("");
+        infoTable->setItem(i, 1, qtablewidgetitem);
     }
-//    infoTable->horizontalHeaderItem(0)->setText("Property");
-//    infoTable->horizontalHeaderItem(1)->setText("Value");
-//    QTableWidgetItem *qtablewidgetitem1= new QTableWidgetItem();
-//    qtablewidgetitem1->setText(" Name");
-//    infoTable->setItem(0, 0, qtablewidgetitem1);
-
-//    QTableWidgetItem *qtablewidgetitem2= new QTableWidgetItem();
-//    qtablewidgetitem2->setText(" Height");
-//    infoTable->setItem(1, 0, qtablewidgetitem2);
-
-//    QTableWidgetItem *qtablewidgetitem3= new QTableWidgetItem();
-//    qtablewidgetitem3->setText(" Width");
-//    infoTable->setItem(2, 0, qtablewidgetitem3);
-
-
-//    QTableWidgetItem *qtablewidgetitem4= new QTableWidgetItem();
-//    qtablewidgetitem4->setText(" Format");
-//    infoTable->setItem(3, 0, qtablewidgetitem4);
-
-//    QTableWidgetItem *qtablewidgetitem5= new QTableWidgetItem();
-//    qtablewidgetitem5->setText(" Path");
-//    infoTable->setItem(4, 0, qtablewidgetitem5);
-
 
     infoTable->setColumnWidth(0,width()/3.0 - 19);
     infoTable->setColumnWidth(1,width()*2.0/3.0);
@@ -64,19 +45,36 @@ void InfoWidget::setupWidget()
     setLayout(layout);
 }
 
-void InfoWidget::resizeEvent(QResizeEvent *event)
+void InfoWidget::resizeEvent(QResizeEvent * /* event */)
 {
     infoTable->setColumnWidth(0,width()/3.0 - 19);
     infoTable->setColumnWidth(1,width()*2.0/3.0);
 }
 
-void InfoWidget::setImage(const QImage &value)
+void InfoWidget::updateImageProperty(QImage &image)
 {
-    image = value;
+    infoTable->item(HEIGHT, 1)->setText(QString::number(image.height()));
+    infoTable->item(WIDTH, 1)->setText(QString::number(image.width()));
+    if(image.format()==QImage::Format_RGB32){
+        infoTable->item(FORMAT,1)->setText(QString("RGB32"));
+    }
+    else if(image.format()==QImage::Format_Indexed8){
+        infoTable->item(FORMAT,1)->setText(QString("Indexed8"));
+    }
+
 }
 
-//void InfoWidget::updateInputImage(QImage image)
-//{
-//    setImage(image);
-//}
+void InfoWidget::updateImagePath(QString &path)
+{
+    QString name = path;
+    QString folderPath = path;
+    int backslashIndex = path.lastIndexOf('/');
+
+    infoTable->item(NAME, 1)->setText(name.remove(0, backslashIndex+1));
+    infoTable->item(NAME, 1)->setToolTip(name);
+
+    infoTable->item(PATH, 1)->setText(folderPath.remove(backslashIndex, name.length()+1));
+    infoTable->item(PATH, 1)->setToolTip(folderPath);
+    //infoTable->item(PATH, 1)->setText();
+}
 

@@ -12,44 +12,47 @@ TransformationWidget::TransformationWidget(QWidget *parent) : QWidget(parent), l
   void TransformationWidget::setupWidget()
   {
     transformationTypeLabel->setText(QString("Transformation Type : "));
-    transformationTypeLabel->setFixedHeight(15);
+    transformationTypeLabel->setFixedHeight(25);
 
     transformationTypeComboBox->addItem(QString("Binary"), BINARY);
     transformationTypeComboBox->addItem(QString("Grayscale"), GRAYSCALE);
-    transformationTypeComboBox->setFixedHeight(20);
+    transformationTypeComboBox->setFixedHeight(25);
 
     transformationRadiusLabel->setText(QString("Scale : "));
-    transformationRadiusLabel->setFixedHeight(15);
+    transformationRadiusLabel->setFixedHeight(25);
 
     transformationRadiusSpinBox->setRange(1, 255);
     transformationRadiusSpinBox->setSingleStep(1);
-    transformationRadiusSpinBox->setFixedHeight(20);
+    transformationRadiusSpinBox->setFixedHeight(25);
 
     applyButton->setText(QString("Apply Changes"));
+    applyButton->setFixedHeight(25);
 
     layout->addWidget(transformationTypeLabel, 0, 0);
-    layout->addWidget(transformationTypeComboBox, 1, 0);
-    layout->addWidget(transformationRadiusLabel, 2, 0);
-    layout->addWidget(transformationRadiusSpinBox, 3, 0);
-    layout->addWidget(applyButton, 4, 0);
+    layout->addWidget(transformationTypeComboBox, 0, 1);
+    layout->addWidget(transformationRadiusLabel, 1, 0);
+    layout->addWidget(transformationRadiusSpinBox, 1, 1);
+    layout->addWidget(applyButton, 2, 0, 2, 2);
 
-    layout->setRowMinimumHeight(0, 15);
-    layout->setRowMinimumHeight(1, 20);
-    layout->setRowMinimumHeight(2, 15);
-    layout->setRowMinimumHeight(3, 20);
-    layout->setRowStretch(4, 5);
+    layout->setRowMinimumHeight(0, 30);
+    layout->setRowMinimumHeight(1, 30);
 
     setLayout(layout);
   }
 
   void TransformationWidget::applyButtonClicked()
   {
+      try{
     if(transformationTypeComboBox->currentData() == BINARY){
         setOutputImage(transformationImage.applyBinaryTransformation(getInputImage(), transformationRadiusSpinBox->value()));
     }
     else if(transformationTypeComboBox->currentData() == GRAYSCALE){
         setOutputImage(transformationImage.applyGrayscaleTransformation(getInputImage()));
     }
+      }
+      catch(std::exception exp){
+          std::cout<< exp.what();
+      }
   }
 
   QImage TransformationWidget::getInputImage() const
@@ -73,7 +76,7 @@ TransformationWidget::TransformationWidget(QWidget *parent) : QWidget(parent), l
     emit outputImageChanged(image);
   }
 
-  void TransformationWidget::updateInputImage(QImage image)
+  void TransformationWidget::updateInputImage(QImage &image)
   {
     setInputImage(image);
   }

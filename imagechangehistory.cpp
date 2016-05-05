@@ -14,6 +14,7 @@ QString ImageChangeHistory::getImagePath() const
 void ImageChangeHistory::setImagePath(const QString &value)
 {
     imagePath = value;
+    emit imagePathUpdated(imagePath);
 }
 
 void ImageChangeHistory::loadImage(const QString &path)

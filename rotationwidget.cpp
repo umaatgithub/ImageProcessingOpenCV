@@ -12,44 +12,48 @@ RotationWidget::RotationWidget(QWidget *parent) : QWidget(parent), layout(new QG
   void RotationWidget::setupWidget()
   {
     rotationTypeLabel->setText(QString("Rotation Type : "));
-    rotationTypeLabel->setFixedHeight(15);
+    rotationTypeLabel->setFixedHeight(25);
 
     rotationTypeComboBox->addItem(QString("Rotate left"), ROTATE_LEFT);
     rotationTypeComboBox->addItem(QString("Rotate right"), ROTATE_RIGHT);
-    rotationTypeComboBox->setFixedHeight(20);
+    rotationTypeComboBox->setFixedHeight(25);
 
     rotationRadiusLabel->setText(QString("Angle : "));
-    rotationRadiusLabel->setFixedHeight(15);
+    rotationRadiusLabel->setFixedHeight(25);
 
-    rotationRadiusSpinBox->setRange(1, 255);
+    rotationRadiusSpinBox->setRange(1, 359);
     rotationRadiusSpinBox->setSingleStep(1);
-    rotationRadiusSpinBox->setFixedHeight(20);
+    rotationRadiusSpinBox->setFixedHeight(25);
+    rotationRadiusSpinBox->setSuffix(QString("°"));
 
     applyButton->setText(QString("Apply Changes"));
+    applyButton->setFixedHeight(25);
 
     layout->addWidget(rotationTypeLabel, 0, 0);
-    layout->addWidget(rotationTypeComboBox, 1, 0);
-    layout->addWidget(rotationRadiusLabel, 2, 0);
-    layout->addWidget(rotationRadiusSpinBox, 3, 0);
-    layout->addWidget(applyButton, 4, 0);
+    layout->addWidget(rotationTypeComboBox, 0, 1);
+    layout->addWidget(rotationRadiusLabel, 1, 0);
+    layout->addWidget(rotationRadiusSpinBox, 1, 1);
+    layout->addWidget(applyButton, 2, 0, 2, 2);
 
-    layout->setRowMinimumHeight(0, 15);
-    layout->setRowMinimumHeight(1, 20);
-    layout->setRowMinimumHeight(2, 15);
-    layout->setRowMinimumHeight(3, 20);
-    layout->setRowStretch(4, 5);
+    layout->setRowMinimumHeight(0, 30);
+    layout->setRowMinimumHeight(1, 30);
 
     setLayout(layout);
   }
 
   void RotationWidget::applyButtonClicked()
   {
+      try{
     if(rotationTypeComboBox->currentData() == ROTATE_LEFT){
         setOutputImage(rotationImage.applyRotateLeft(getInputImage(), rotationRadiusSpinBox->value()));
     }
     else if(rotationTypeComboBox->currentData() == ROTATE_RIGHT){
         setOutputImage(rotationImage.applyRotateRight(getInputImage(), rotationRadiusSpinBox->value()));
     }
+      }
+      catch(std::exception exp){
+          std::cout<< exp.what();
+      }
   }
 
   QImage RotationWidget::getInputImage() const
@@ -73,7 +77,7 @@ RotationWidget::RotationWidget(QWidget *parent) : QWidget(parent), layout(new QG
     emit outputImageChanged(image);
   }
 
-  void RotationWidget::updateInputImage(QImage image)
+  void RotationWidget::updateInputImage(QImage &image)
   {
     setInputImage(image);
   }

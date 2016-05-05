@@ -2,7 +2,7 @@
 #include <QGridLayout>
 
 ImageDisplayWidget::ImageDisplayWidget(QWidget *parent) : QWidget(parent),
-    layout(new QGridLayout),scrollArea(new QScrollArea),
+    layout(new QGridLayout), scrollArea(new QScrollArea),
     imageDisplayLabel(new QLabel),  percentageZoom(0.0)
 {
     connect(this, SIGNAL(imageChanged()),this, SLOT(updateDisplayArea()));
@@ -77,7 +77,7 @@ void ImageDisplayWidget::updateDisplayArea()
     }
 }
 
-void ImageDisplayWidget::updateDisplayImage(QImage image, bool newImage)
+void ImageDisplayWidget::updateDisplayImage(QImage &image, bool newImage)
 {
     if(newImage==true){
         setPercentageZoom(100.0);

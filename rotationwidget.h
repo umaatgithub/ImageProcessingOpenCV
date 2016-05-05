@@ -7,6 +7,7 @@
 #include <QComboBox>
 #include <QSpinBox>
 #include <QPushButton>
+#include <iostream>
 #include "rotationimage.h"
 
 class RotationWidget : public QWidget
@@ -26,7 +27,7 @@ signals:
     void outputImageChanged(QImage image);
 
 public slots:
-    void updateInputImage(QImage image);
+    void updateInputImage(QImage &image);
     void applyButtonClicked();
 
 protected:

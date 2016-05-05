@@ -15,19 +15,20 @@ public:
     explicit InfoWidget(QWidget *parent = 0);
     void setupWidget();
 
-    void resizeEvent(QResizeEvent* event);
+    void resizeEvent(QResizeEvent *);
 
     void setImage(const QImage &value);
 
 signals:
 
 public slots:
-    //void updateImage(QImage image);
+    void updateImageProperty(QImage &image);
+    void updateImagePath(QString &path);
 
 protected:
     QGridLayout *layout;
     QTableWidget *infoTable;
-    QImage image;
+    //QImage image;
     std::vector<QString> imagePropertyLabel;
     enum ImagePropertyIndex{ NAME=0, HEIGHT, WIDTH, FORMAT, PATH};
 };
