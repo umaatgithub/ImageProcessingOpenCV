@@ -30,7 +30,11 @@ SOURCES += main.cpp\
     scaleimage.cpp \
     rotationwidget.cpp \
     scalewidget.cpp \
-    infowidget.cpp
+    infowidget.cpp \
+    qtopencvbridge.cpp \
+    displaylabel.cpp \
+    edgedetectionimage.cpp \
+    edgedetectionwidget.cpp
 
 HEADERS  += mainwindow.h \
     centralgridlayoutwidget.h \
@@ -47,6 +51,10 @@ HEADERS  += mainwindow.h \
     scaleimage.h \
     rotationwidget.h \
     scalewidget.h \
-    infowidget.h
+    infowidget.h \
+    qtopencvbridge.h \
+    displaylabel.h \
+    edgedetectionimage.h \
+    edgedetectionwidget.h
 
 FORMS    += mainwindow.ui

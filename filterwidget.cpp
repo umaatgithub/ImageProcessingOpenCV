@@ -38,10 +38,6 @@ void FilterWidget::setupWidget()
 
     layout->setRowMinimumHeight(0, 30);
     layout->setRowMinimumHeight(1, 30);
-//    layout->setRowMinimumHeight(2, 15);
-//    layout->setRowMinimumHeight(3, 20);
-//    layout->setRowStretch(4, 5);
-
 
     setLayout(layout);
 }
@@ -49,24 +45,36 @@ void FilterWidget::setupWidget()
 void FilterWidget::applyButtonClicked()
 {
     try{
-    if(filterTypeComboBox->currentData() == BILATERAL){
-        setOutputImage(filterImage.applyBilateralFilter(getInputImage(), filterRadiusSpinBox->value()));
-    }
-    else if(filterTypeComboBox->currentData() == BOX){
-        setOutputImage(filterImage.applyNormalizedBoxFilter(getInputImage(), filterRadiusSpinBox->value()));
-    }
-    else if(filterTypeComboBox->currentData() == GAUSSIAN){
-        setOutputImage(filterImage.applyGaussianFilter(getInputImage(), filterRadiusSpinBox->value()));
-    }
-    else if(filterTypeComboBox->currentData() == MEDIAN){
-        setOutputImage(filterImage.applyMedianFilter(getInputImage(), filterRadiusSpinBox->value()));
-    }
+        emit statusChanged(QString(" Processing image..."), Qt::blue);
+        if(!getInputImage().isNull()){
+            if(filterTypeComboBox->currentData() == BILATERAL){
+                setOutputImage(filterImage.applyBilateralFilter(getInputImage(), filterRadiusSpinBox->value()));
+                emit statusChanged(QString(" Done."), Qt::green);
+            }
+            else if(filterTypeComboBox->currentData() == BOX){
+                setOutputImage(filterImage.applyNormalizedBoxFilter(getInputImage(), filterRadiusSpinBox->value()));
+                emit statusChanged(QString(" Done."), Qt::green);
+            }
+            else if(filterTypeComboBox->currentData() == GAUSSIAN){
+                setOutputImage(filterImage.applyGaussianFilter(getInputImage(), filterRadiusSpinBox->value()));
+                emit statusChanged(QString(" Done."), Qt::green);
+            }
+            else if(filterTypeComboBox->currentData() == MEDIAN){
+                setOutputImage(filterImage.applyMedianFilter(getInputImage(), filterRadiusSpinBox->value()));
+                emit statusChanged(QString(" Done."), Qt::green);
+            }
+        }
+        else{
+            emit statusChanged(QString(" Image not set."), Qt::black);
+        }
     }
     catch (const char* msg) {
-         std::cerr << msg << std::endl;
-       }
+        std::cerr << msg << std::endl;
+        emit statusChanged(QString(msg), Qt::red);
+    }
     catch(std::exception exp){
-        std::cout<< exp.what();
+        std::cerr << exp.what();
+        emit statusChanged(QString(" Error."), Qt::red);
     }
 }
 

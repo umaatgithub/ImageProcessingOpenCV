@@ -9,6 +9,7 @@
 #include "transformationwidget.h"
 #include "rotationwidget.h"
 #include "scalewidget.h"
+#include "edgedetectionwidget.h"
 
 class ImageProcessingToolBoxWidget : public QWidget
 {
@@ -23,10 +24,8 @@ public:
     TransformationWidget *getTransformationToolSet() const;
     RotationWidget *getRotationToolSet() const;
     ScaleWidget *getScaleToolSet() const;
-
-signals:
-
-public slots:
+    EdgeDetectionWidget *getEdgeDetectionToolSet() const;
+    void setEdgeDetectionToolSet(EdgeDetectionWidget *value);
 
 protected:
     QGridLayout *layout;
@@ -36,6 +35,7 @@ protected:
     TransformationWidget *transformationToolSet;
     RotationWidget *rotationToolSet;
     ScaleWidget *scaleToolSet;
+    EdgeDetectionWidget *edgeDetectionToolSet;
 
 };
 

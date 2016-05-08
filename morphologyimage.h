@@ -5,6 +5,7 @@
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
+#include "qtopencvbridge.h"
 
 using namespace cv;
 
@@ -19,8 +20,8 @@ public:
     QImage applyClosing(QImage const& inputImage, int radius);
 
 protected:
-    QImage Mat2QImage(cv::Mat const& mat);
-    cv::Mat QImage2Mat(QImage const& image);
+    QtOpenCVBridge *qtOpenCVBridge;
+
 };
 
 #endif // MORPHOLOGYIMAGE_H

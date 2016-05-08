@@ -5,6 +5,7 @@
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
+#include "qtopencvbridge.h"
 
 using namespace cv;
 
@@ -13,12 +14,12 @@ class RotationImage : public QObject
     Q_OBJECT
 public:
     explicit RotationImage(QObject *parent = 0);
-    QImage applyRotateLeft(QImage const& inputImage, int radius);
-    QImage applyRotateRight(QImage const& inputImage, int radius);
+    QImage applyAntiClockwiseRotation(QImage const& inputImage, int radius);
+    QImage applyClockwiseRotation(QImage const& inputImage, int radius);
 
 protected:
-    QImage Mat2QImage(cv::Mat const& mat);
-    cv::Mat QImage2Mat(QImage const& image);
+    QtOpenCVBridge *qtOpenCVBridge;
+
 };
 
 #endif // ROTATIONIMAGE_H

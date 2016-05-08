@@ -1,4 +1,5 @@
 #include "infowidget.h"
+#include <iostream>
 
 InfoWidget::InfoWidget(QWidget *parent) : QWidget(parent), layout(new QGridLayout),
     infoTable(new QTableWidget)
@@ -61,6 +62,15 @@ void InfoWidget::updateImageProperty(QImage &image)
     else if(image.format()==QImage::Format_Indexed8){
         infoTable->item(FORMAT,1)->setText(QString("Indexed8"));
     }
+    else if(image.format()==QImage::Format_Grayscale8){
+        infoTable->item(FORMAT,1)->setText(QString("Grayscale8"));
+    }
+    else if(image.format()==QImage::Format_RGB888){
+        infoTable->item(FORMAT,1)->setText(QString("RGB888"));
+    }
+    else{
+        infoTable->item(FORMAT,1)->setText(QString("Not supported"));;
+    }
 
 }
 
@@ -75,6 +85,5 @@ void InfoWidget::updateImagePath(QString &path)
 
     infoTable->item(PATH, 1)->setText(folderPath.remove(backslashIndex, name.length()+1));
     infoTable->item(PATH, 1)->setToolTip(folderPath);
-    //infoTable->item(PATH, 1)->setText();
 }
 

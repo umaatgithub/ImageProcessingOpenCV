@@ -25,20 +25,22 @@ public:
 
 signals:
     void outputImageChanged(QImage image);
+    void statusChanged(QString status, QColor statusColor = Qt::blue);
 
 public slots:
     void updateInputImage(QImage &image);
     void applyButtonClicked();
+    void modifyWidgetOptions(int currentIndex);
 
 protected:
     QGridLayout *layout;
     QLabel *transformationTypeLabel;
     QComboBox *transformationTypeComboBox;
-    QLabel *transformationRadiusLabel;
-    QSpinBox *transformationRadiusSpinBox;
+    QLabel *thresholdPercentageLabel;
+    QSpinBox *thresholdPercentageSpinBox;
     QPushButton *applyButton;
 
-    enum TransformationType{ BINARY=1, GRAYSCALE};
+    enum TransformationType{ BINARY=0, GRAYSCALE, NEGATIVE};
 
     QImage inputImage;
     QImage outputImage;

@@ -25,6 +25,7 @@ public:
 
 signals:
     void outputImageChanged(QImage image);
+    void statusChanged(QString status, QColor statusColor = Qt::blue);
 
 public slots:
     void updateInputImage(QImage &image);
@@ -34,11 +35,11 @@ protected:
     QGridLayout *layout;
     QLabel *scaleTypeLabel;
     QComboBox *scaleTypeComboBox;
-    QLabel *scaleRadiusLabel;
-    QSpinBox *scaleRadiusSpinBox;
+    QLabel *scalePercentageLabel;
+    QSpinBox *scalePercentageSpinBox;
     QPushButton *applyButton;
 
-    enum ScaleType{ SCALE_DOWN=1, SCALE_UP};
+    enum ScaleType{ SCALE_DOWN=0, SCALE_UP};
 
     QImage inputImage;
     QImage outputImage;

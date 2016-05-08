@@ -1,5 +1,5 @@
-#ifndef ROTATIONWIDGET_H
-#define ROTATIONWIDGET_H
+#ifndef EDGEDETECTIONWIDGET_H
+#define EDGEDETECTIONWIDGET_H
 
 #include <QWidget>
 #include <QGridLayout>
@@ -8,13 +8,13 @@
 #include <QSpinBox>
 #include <QPushButton>
 #include <iostream>
-#include "rotationimage.h"
+#include "edgedetectionimage.h"
 
-class RotationWidget : public QWidget
+class EdgeDetectionWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit RotationWidget(QWidget *parent = 0);
+    explicit EdgeDetectionWidget(QWidget *parent = 0);
     void setupWidget();
 
     void setInputImage(const QImage &image);
@@ -33,17 +33,18 @@ public slots:
 
 protected:
     QGridLayout *layout;
-    QLabel *directionLabel;
-    QComboBox *directionComboBox;
-    QLabel *angleLabel;
-    QSpinBox *angleSpinBox;
+    QLabel *edgeDetectorLabel;
+    QComboBox *edgeDetectorComboBox;
+    QLabel *filterRadiusLabel;
+    QSpinBox *filterRadiusSpinBox;
     QPushButton *applyButton;
 
-    enum RotationDirection{ ANTI_CLOCKWISE=0, CLOCKWISE};
+    enum FilterType{ CANNY=0, SCHARR, SOBEL};
 
     QImage inputImage;
     QImage outputImage;
-    RotationImage rotationImage;
+    EdgeDetectionImage edgeDetectionImage;
+
 };
 
-#endif // ROTATIONWIDGET_H
+#endif // EDGEDETECTIONWIDGET_H

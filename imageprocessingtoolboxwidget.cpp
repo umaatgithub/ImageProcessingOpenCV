@@ -3,13 +3,14 @@
 ImageProcessingToolBoxWidget::ImageProcessingToolBoxWidget(QWidget *parent) : QWidget(parent),
     layout(new QGridLayout), toolBox(new QToolBox), filterToolSet(new FilterWidget),
     morphologyToolSet(new MorphologyWidget), transformationToolSet(new TransformationWidget),
-    rotationToolSet(new RotationWidget), scaleToolSet(new ScaleWidget)
+    rotationToolSet(new RotationWidget), scaleToolSet(new ScaleWidget), edgeDetectionToolSet(new EdgeDetectionWidget)
 {
     setupImageProcessingToolBox();
 }
 
 ImageProcessingToolBoxWidget::~ImageProcessingToolBoxWidget()
 {
+    delete edgeDetectionToolSet;
     delete scaleToolSet;
     delete rotationToolSet;
     delete transformationToolSet;
@@ -26,11 +27,12 @@ void ImageProcessingToolBoxWidget::setupImageProcessingToolBox()
     layout->setRowStretch(0,1);
     setLayout(layout);
 
-    toolBox->addItem(filterToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Filter");
-    toolBox->addItem(morphologyToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Morphology Operation");
-    toolBox->addItem(transformationToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Transformation");
-    toolBox->addItem(rotationToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Rotate Image");
-    toolBox->addItem(scaleToolSet,QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Scaling");
+    toolBox->addItem(rotationToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Rotation");
+    toolBox->addItem(scaleToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Scaling");
+    toolBox->addItem(filterToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Smoothing Filter");
+    toolBox->addItem(transformationToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Transformation");
+    toolBox->addItem(morphologyToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Morphology Operation");
+    toolBox->addItem(edgeDetectionToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Edge Detection");
     toolBox->layout()->setSpacing(0);
 }
 
@@ -57,5 +59,15 @@ RotationWidget *ImageProcessingToolBoxWidget::getRotationToolSet() const
 ScaleWidget *ImageProcessingToolBoxWidget::getScaleToolSet() const
 {
     return scaleToolSet;
+}
+
+EdgeDetectionWidget *ImageProcessingToolBoxWidget::getEdgeDetectionToolSet() const
+{
+    return edgeDetectionToolSet;
+}
+
+void ImageProcessingToolBoxWidget::setEdgeDetectionToolSet(EdgeDetectionWidget *value)
+{
+    edgeDetectionToolSet = value;
 }
 

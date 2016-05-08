@@ -28,7 +28,6 @@ public slots:
 protected:
     QGridLayout *layout;
     QTableWidget *infoTable;
-    //QImage image;
     std::vector<QString> imagePropertyLabel;
     enum ImagePropertyIndex{ NAME=0, HEIGHT, WIDTH, FORMAT, PATH};
 };

@@ -45,47 +45,62 @@ void MorphologyWidget::setupWidget()
 void MorphologyWidget::applyButtonClicked()
 {
     try{
-  if(morphologyTypeComboBox->currentData() == CLOSING){
-      setOutputImage(morphologyImage.applyClosing(getInputImage(), morphologyRadiusSpinBox->value()));
-  }
-  else if(morphologyTypeComboBox->currentData() == DILATE){
-      setOutputImage(morphologyImage.applyDilate(getInputImage(), morphologyRadiusSpinBox->value()));
-  }
-  else if(morphologyTypeComboBox->currentData() == ERODE){
-      setOutputImage(morphologyImage.applyErode(getInputImage(), morphologyRadiusSpinBox->value()));
-  }
-  else if(morphologyTypeComboBox->currentData() == OPENING){
-      setOutputImage(morphologyImage.applyOpening(getInputImage(), morphologyRadiusSpinBox->value()));
-  }
+        emit statusChanged(QString(" Processing image..."), Qt::blue);
+        if(!getInputImage().isNull()){
+            if(morphologyTypeComboBox->currentData() == CLOSING){
+                setOutputImage(morphologyImage.applyClosing(getInputImage(), morphologyRadiusSpinBox->value()));
+                emit statusChanged(QString(" Done."), Qt::green);
+            }
+            else if(morphologyTypeComboBox->currentData() == DILATE){
+                setOutputImage(morphologyImage.applyDilate(getInputImage(), morphologyRadiusSpinBox->value()));
+                emit statusChanged(QString(" Done."), Qt::green);
+            }
+            else if(morphologyTypeComboBox->currentData() == ERODE){
+                setOutputImage(morphologyImage.applyErode(getInputImage(), morphologyRadiusSpinBox->value()));
+                emit statusChanged(QString(" Done."), Qt::green);
+            }
+            else if(morphologyTypeComboBox->currentData() == OPENING){
+                setOutputImage(morphologyImage.applyOpening(getInputImage(), morphologyRadiusSpinBox->value()));
+                emit statusChanged(QString(" Done."), Qt::green);
+            }
+        }
+        else{
+            emit statusChanged(QString(" Image not set."), Qt::black);
+        }
+    }
+    catch (const char* msg) {
+        std::cerr << msg << std::endl;
+        emit statusChanged(QString(msg), Qt::red);
     }
     catch(std::exception exp){
-        std::cout<< exp.what();
+        std::cerr << exp.what();
+        emit statusChanged(QString(" Error."), Qt::red);
     }
 }
 
 QImage MorphologyWidget::getInputImage() const
 {
-  return inputImage;
+    return inputImage;
 }
 
 void MorphologyWidget::setInputImage(const QImage &image)
 {
-  inputImage = image;
+    inputImage = image;
 }
 
 QImage MorphologyWidget::getOutputImage() const
 {
-  return outputImage;
+    return outputImage;
 }
 
 void MorphologyWidget::setOutputImage(const QImage &image)
 {
-  outputImage = image;
-  emit outputImageChanged(image);
+    outputImage = image;
+    emit outputImageChanged(image);
 }
 
 void MorphologyWidget::updateInputImage(QImage &image)
 {
-  setInputImage(image);
+    setInputImage(image);
 }
 

@@ -5,6 +5,7 @@
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/highgui/highgui.hpp"
+#include "qtopencvbridge.h"
 
 using namespace cv;
 
@@ -13,12 +14,13 @@ class TransformationImage : public QObject
     Q_OBJECT
 public:
     explicit TransformationImage(QObject *parent = 0);
-    QImage applyBinaryTransformation(QImage const& inputImage, int radius);
+    QImage applyBinaryTransformation(QImage const& inputImage, const int& radius);
     QImage applyGrayscaleTransformation(QImage const& inputImage);
+    QImage applyNegativeTransformation(QImage const& inputImage, const int& radius);
 
 protected:
-    QImage Mat2QImage(cv::Mat const& mat);
-    cv::Mat QImage2Mat(QImage const& image);
+    QtOpenCVBridge *qtOpenCVBridge;
+
 };
 
 #endif // TRANSFORMATIONIMAGE_H

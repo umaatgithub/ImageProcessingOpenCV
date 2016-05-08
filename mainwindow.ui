@@ -25,8 +25,11 @@
    </property>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="movable">
+    <bool>true</bool>
+   </property>
    <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
+    <enum>LeftToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
@@ -37,9 +40,17 @@
    <addaction name="actionSave_As"/>
    <addaction name="actionZoom_In"/>
    <addaction name="actionZoom_Out"/>
+   <addaction name="actionSelect"/>
+   <addaction name="actionCrop"/>
+   <addaction name="actionRegion_Of_Interest"/>
+   <addaction name="actionContrast"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionNew">
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/document-open-7.ico</normaloff>C:/Users/Umamaheswaran/Desktop/document-open-7.ico</iconset>
+   </property>
    <property name="text">
     <string>New</string>
    </property>
@@ -48,6 +59,10 @@
    </property>
   </action>
   <action name="actionUndo">
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/edit-undo-7.ico</normaloff>C:/Users/Umamaheswaran/Desktop/edit-undo-7.ico</iconset>
+   </property>
    <property name="text">
     <string>Undo</string>
    </property>
@@ -59,6 +74,10 @@
    </property>
   </action>
   <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/edit-redo-7.ico</normaloff>C:/Users/Umamaheswaran/Desktop/edit-redo-7.ico</iconset>
+   </property>
    <property name="text">
     <string>Redo</string>
    </property>
@@ -70,6 +89,10 @@
    </property>
   </action>
   <action name="actionSave_As">
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/document-save-as-5.ico</normaloff>C:/Users/Umamaheswaran/Desktop/document-save-as-5.ico</iconset>
+   </property>
    <property name="text">
     <string>Save As</string>
    </property>
@@ -78,6 +101,10 @@
    </property>
   </action>
   <action name="actionZoom_In">
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/zoom-in-3.ico</normaloff>C:/Users/Umamaheswaran/Desktop/zoom-in-3.ico</iconset>
+   </property>
    <property name="text">
     <string>Zoom In</string>
    </property>
@@ -86,11 +113,72 @@
    </property>
   </action>
   <action name="actionZoom_Out">
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/zoom-out-3.ico</normaloff>C:/Users/Umamaheswaran/Desktop/zoom-out-3.ico</iconset>
+   </property>
    <property name="text">
     <string>Zoom Out</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionCrop">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/transform-crop-and-resize.ico</normaloff>C:/Users/Umamaheswaran/Desktop/transform-crop-and-resize.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Crop</string>
+   </property>
+   <property name="toolTip">
+    <string>Crop</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/select-rectangular.ico</normaloff>C:/Users/Umamaheswaran/Desktop/select-rectangular.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Select</string>
+   </property>
+   <property name="toolTip">
+    <string>Select</string>
+   </property>
+  </action>
+  <action name="actionRegion_Of_Interest">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/select.ico</normaloff>C:/Users/Umamaheswaran/Desktop/select.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Region Of Interest</string>
+   </property>
+   <property name="toolTip">
+    <string>Region Of Interest</string>
+   </property>
+  </action>
+  <action name="actionContrast">
+   <property name="icon">
+    <iconset>
+     <normaloff>C:/Users/Umamaheswaran/Desktop/Contrast.ico</normaloff>C:/Users/Umamaheswaran/Desktop/Contrast.ico</iconset>
+   </property>
+   <property name="text">
+    <string>Contrast</string>
+   </property>
+   <property name="toolTip">
+    <string>Auto Contrast</string>
    </property>
   </action>
  </widget>

@@ -25,6 +25,7 @@ public:
 
 signals:
     void outputImageChanged(QImage image);
+    void statusChanged(QString status, QColor statusColor = Qt::blue);
 
 public slots:
     void updateInputImage(QImage &image);
@@ -38,7 +39,7 @@ protected:
     QSpinBox *morphologyRadiusSpinBox;
     QPushButton *applyButton;
 
-    enum MorphologyType{ CLOSING=1, DILATE, ERODE, OPENING};
+    enum MorphologyType{ CLOSING=0, DILATE, ERODE, OPENING};
 
     QImage inputImage;
     QImage outputImage;

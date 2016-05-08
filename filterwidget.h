@@ -25,6 +25,7 @@ public:
 
 signals:
     void outputImageChanged(QImage image);
+    void statusChanged(QString status, QColor statusColor = Qt::blue);
 
 public slots:
     void updateInputImage(QImage &image);
@@ -38,7 +39,7 @@ protected:
     QSpinBox *filterRadiusSpinBox;
     QPushButton *applyButton;
 
-    enum FilterType{ BILATERAL=1, BOX, GAUSSIAN, MEDIAN};
+    enum FilterType{ BILATERAL=0, BOX, GAUSSIAN, MEDIAN};
 
     QImage inputImage;
     QImage outputImage;
