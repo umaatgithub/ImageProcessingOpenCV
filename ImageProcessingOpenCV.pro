@@ -19,42 +19,47 @@ SOURCES += main.cpp\
     centralgridlayoutwidget.cpp \
     imagedisplaywidget.cpp \
     imageprocessingtoolboxwidget.cpp \
-    filterimage.cpp \
-    filterwidget.cpp \
     imagechangehistory.cpp \
-    morphologyimage.cpp \
-    transformationimage.cpp \
-    morphologywidget.cpp \
-    transformationwidget.cpp \
-    rotationimage.cpp \
-    scaleimage.cpp \
-    rotationwidget.cpp \
-    scalewidget.cpp \
     infowidget.cpp \
     qtopencvbridge.cpp \
     displaylabel.cpp \
-    edgedetectionimage.cpp \
-    edgedetectionwidget.cpp
+    imageprocessingtoolwidget.cpp \
+    imageedgefilter.cpp \
+    imageedgefiltertool.cpp \
+    imagemorphology.cpp \
+    imagemorphologytool.cpp \
+    imagerotation.cpp \
+    imagerotationtool.cpp \
+    imagetransformation.cpp \
+    imagetransformationtool.cpp \
+    imagesmootheningfilter.cpp \
+    imagesmootheningfiltertool.cpp \
+    imagescaling.cpp \
+    imagescalingtool.cpp
 
 HEADERS  += mainwindow.h \
     centralgridlayoutwidget.h \
     imagedisplaywidget.h \
     imageprocessingtoolboxwidget.h \
-    filterimage.h \
-    filterwidget.h \
     imagechangehistory.h \
-    morphologyimage.h \
-    transformationimage.h \
-    morphologywidget.h \
-    transformationwidget.h \
-    rotationimage.h \
-    scaleimage.h \
-    rotationwidget.h \
-    scalewidget.h \
     infowidget.h \
     qtopencvbridge.h \
     displaylabel.h \
-    edgedetectionimage.h \
-    edgedetectionwidget.h
+    imageprocessingtoolwidget.h \
+    imageedgefilter.h \
+    imageedgefiltertool.h \
+    imagemorphology.h \
+    imagemorphologytool.h \
+    imagerotation.h \
+    imagerotationtool.h \
+    imagetransformation.h \
+    imagetransformationtool.h \
+    imagesmootheningfilter.h \
+    imagesmootheningfiltertool.h \
+    imagescaling.h \
+    imagescalingtool.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    images.qrc

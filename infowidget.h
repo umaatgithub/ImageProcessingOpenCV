@@ -17,12 +17,8 @@ public:
 
     void resizeEvent(QResizeEvent *);
 
-    void setImage(const QImage &value);
-
-signals:
-
 public slots:
-    void updateImageProperty(QImage &image);
+    void updateImageProperty(QImage* image);
     void updateImagePath(QString &path);
 
 protected:

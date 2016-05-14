@@ -1,7 +1,7 @@
 #include "displaylabel.h"
 
 DisplayLabel::DisplayLabel():mousePressed(false), mouseReleased(true),
-    selectionFlag(false), selectionResize(false), cropFlag(false), roiFlag(false)
+    selectionFlag(false), selectionResize(false), cropFlag(false), roiFlag(false), selectionRect(new QRect)
 {
 
 }
@@ -16,10 +16,10 @@ void DisplayLabel::disableSelection()
 {
     this->setCursor(Qt::ArrowCursor);
 
-    selectionRect.setX(0);
-    selectionRect.setY(0);
-    selectionRect.setWidth(0);
-    selectionRect.setHeight(0);
+    selectionRect->setX(0);
+    selectionRect->setY(0);
+    selectionRect->setWidth(0);
+    selectionRect->setHeight(0);
     update();
     setSelectionFlag(false);
 }
@@ -34,8 +34,8 @@ void DisplayLabel::mousePressEvent(QMouseEvent *event)
         setStartX(event->x());
         std::cout << event->y() << std::endl;
         setStartY(event->y());
-        selectionRect.setX(getStartX()*100/getPercentageZoom());
-        selectionRect.setY(getStartY()*100/getPercentageZoom());
+        selectionRect->setX(getStartX()*100/getPercentageZoom());
+        selectionRect->setY(getStartY()*100/getPercentageZoom());
     }
 }
 
@@ -60,8 +60,8 @@ void DisplayLabel::mouseReleaseEvent(QMouseEvent *event)
         setEndX(event->x());
         std::cout << event->y() << std::endl;
         setEndY(event->y());
-        selectionRect.setWidth((endX-startX)*100/getPercentageZoom());
-        selectionRect.setHeight((endY-startY)*100/getPercentageZoom());
+        selectionRect->setWidth((endX-startX)*100/getPercentageZoom());
+        selectionRect->setHeight((endY-startY)*100/getPercentageZoom());
         update();
         emit selectionUpdated(selectionRect);
     }
@@ -74,18 +74,18 @@ void DisplayLabel::paintEvent(QPaintEvent *event)
         QPainter paint(this);
         QPen pen; pen.setStyle(Qt::DashDotLine);
         paint.setPen(pen);
-        QBrush brush(QColor(255, 255, 255, 100));
+        QBrush brush(QColor(255, 255, 255, 10));
         paint.setBrush(brush);
         //paint.brush().setColor(QColor::fromRgba(125, 125, 125, 125));
-        paint.drawRect(selectionRect.x()*percentageZoom/100, selectionRect.y()*percentageZoom/100,
-                       selectionRect.width()*percentageZoom/100, selectionRect.height()*percentageZoom/100);
+        paint.drawRect(selectionRect->x()*percentageZoom/100, selectionRect->y()*percentageZoom/100,
+                       selectionRect->width()*percentageZoom/100, selectionRect->height()*percentageZoom/100);
         selectionResize = false;
     }
     else if(selectionFlag == true){
         QPainter paint(this);
         QPen pen; pen.setStyle(Qt::DashDotLine);
         paint.setPen(pen);
-        QBrush brush(QColor(255, 255, 255, 100));
+        QBrush brush(QColor(255, 255, 255, 10));
         paint.setBrush(brush);
         paint.drawRect(startX, startY, endX-startX, endY-startY);
         if(mouseReleased == true){
@@ -215,12 +215,12 @@ void DisplayLabel::setPercentageZoom(float value)
     percentageZoom = value;
 }
 
-QRect DisplayLabel::getSelectionRect() const
+QRect *DisplayLabel::getSelectionRect() const
 {
     return selectionRect;
 }
 
-void DisplayLabel::setSelectionRect(const QRect &value)
+void DisplayLabel::setSelectionRect(QRect *value)
 {
     selectionRect = value;
 }

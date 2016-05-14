@@ -4,12 +4,12 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QToolBox>
-#include "filterwidget.h"
-#include "morphologywidget.h"
-#include "transformationwidget.h"
-#include "rotationwidget.h"
-#include "scalewidget.h"
-#include "edgedetectionwidget.h"
+#include "imagesmootheningfiltertool.h"
+#include "imagemorphologytool.h"
+#include "imagetransformationtool.h"
+#include "imagerotationtool.h"
+#include "imagescalingtool.h"
+#include "imageedgefiltertool.h"
 
 class ImageProcessingToolBoxWidget : public QWidget
 {
@@ -21,21 +21,20 @@ public:
 
     FilterWidget *getFilterToolSet() const;
     MorphologyWidget *getMorphologyToolSet() const;
-    TransformationWidget *getTransformationToolSet() const;
+    ImageTransformationTool *getTransformationToolSet() const;
     RotationWidget *getRotationToolSet() const;
-    ScaleWidget *getScaleToolSet() const;
-    EdgeDetectionWidget *getEdgeDetectionToolSet() const;
-    void setEdgeDetectionToolSet(EdgeDetectionWidget *value);
+    ImageScalingTool *getScaleToolSet() const;
+    ImageEdgeFilterTool *getEdgeDetectionToolSet() const;
 
 protected:
     QGridLayout *layout;
     QToolBox *toolBox;
     FilterWidget *filterToolSet;
     MorphologyWidget *morphologyToolSet;
-    TransformationWidget *transformationToolSet;
+    ImageTransformationTool *transformationToolSet;
     RotationWidget *rotationToolSet;
-    ScaleWidget *scaleToolSet;
-    EdgeDetectionWidget *edgeDetectionToolSet;
+    ImageScalingTool *scaleToolSet;
+    ImageEdgeFilterTool *edgeDetectionToolSet;
 
 };
 

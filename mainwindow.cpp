@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QFileDialog>
-#include "filterimage.h"
+#include "imagesmootheningfilter.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -104,6 +104,8 @@ void MainWindow::on_actionRegion_Of_Interest_triggered()
     ui->actionCrop->setEnabled(false);
     ui->actionRegion_Of_Interest->setEnabled(false);
     ui->actionSelect->setChecked(false);
+    ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet()->setRoiRect(ui->centralWidget->getImageDisplayWidget()->getImageDisplayLabel()->getSelectionRect());
+    ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet()->setRoiRect(ui->centralWidget->getImageDisplayWidget()->getImageDisplayLabel()->getSelectionRect());
 }
 
 
@@ -112,9 +114,9 @@ void MainWindow::on_actionContrast_triggered()
     ui->centralWidget->getImageDisplayWidget()->autoContrastDisplayImage();
 }
 
-void MainWindow::enableCropAndROI(QRect &selectionRect)
+void MainWindow::enableCropAndROI(QRect *selectionRect)
 {
-    if(selectionRect.width()!=0 && selectionRect.height()!=0){
+    if(selectionRect->width()!=0 && selectionRect->height()!=0){
         ui->actionCrop->setEnabled(true);
         ui->actionRegion_Of_Interest->setEnabled(true);
     }
@@ -139,12 +141,10 @@ void MainWindow::updateStatusBar(QString status, QColor statusColor)
 
 void MainWindow::connectSignalsAndSlots(){
 
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
-            ui->centralWidget->getImageDisplayWidget(), SLOT(updateDisplayImage(QImage&, bool)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage*,bool)),
+            ui->centralWidget->getImageDisplayWidget(), SLOT(updateDisplayImage(QImage*, bool)));
 
     connect(ui->centralWidget->getImageDisplayWidget(),SIGNAL(percentageZoomChanged(float)), this, SLOT(updateZoomStatus(float)));
-//    connect(ui->centralWidget->getImageDisplayWidget(),SIGNAL(percentageZoomChanged(float)),
-//            ui->centralWidget->getImageDisplayWidget()->getImageDisplayLabel(), SLOT(updatePercentageZoom(float)));
 
     connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SIGNAL(statusChanged(QString, QColor)),
             this, SLOT(updateStatusBar(QString, QColor)));
@@ -160,43 +160,43 @@ void MainWindow::connectSignalsAndSlots(){
             this, SLOT(updateStatusBar(QString, QColor)));
 
 
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SLOT(updateInputImage(QImage&)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SLOT(updateInputImage(QImage&)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SLOT(updateInputImage(QImage&)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getRotationToolSet(), SLOT(updateInputImage(QImage&)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getScaleToolSet(), SLOT(updateInputImage(QImage&)));
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
-            ui->centralWidget->getImageProcessingToolBoxWidget()->getEdgeDetectionToolSet(), SLOT(updateInputImage(QImage&)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage*,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SLOT(updateInputImage(QImage*)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage*,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SLOT(updateInputImage(QImage*)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage*,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SLOT(updateInputImage(QImage*)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage*,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getRotationToolSet(), SLOT(updateInputImage(QImage*)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage*,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getScaleToolSet(), SLOT(updateInputImage(QImage*)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage*,bool)),
+            ui->centralWidget->getImageProcessingToolBoxWidget()->getEdgeDetectionToolSet(), SLOT(updateInputImage(QImage*)));
 
-    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage&,bool)),
-            ui->centralWidget->getInfoWidget(), SLOT(updateImageProperty(QImage&)));
+    connect(imageChangeHistory, SIGNAL(imageHistoryUpdated(QImage*,bool)),
+            ui->centralWidget->getInfoWidget(), SLOT(updateImageProperty(QImage*)));
     connect(imageChangeHistory, SIGNAL(imagePathUpdated(QString&)),
             ui->centralWidget->getInfoWidget(), SLOT(updateImagePath(QString&)));
 
 
-    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SIGNAL(outputImageChanged(QImage)),
-            imageChangeHistory, SLOT(updateImageHistory(QImage)));
-    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SIGNAL(outputImageChanged(QImage)),
-            imageChangeHistory, SLOT(updateImageHistory(QImage)));
-    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SIGNAL(outputImageChanged(QImage)),
-            imageChangeHistory, SLOT(updateImageHistory(QImage)));
-    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getRotationToolSet(), SIGNAL(outputImageChanged(QImage)),
-            imageChangeHistory, SLOT(updateImageHistory(QImage)));
-    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getScaleToolSet(), SIGNAL(outputImageChanged(QImage)),
-            imageChangeHistory, SLOT(updateImageHistory(QImage)));
-    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getEdgeDetectionToolSet(), SIGNAL(outputImageChanged(QImage)),
-            imageChangeHistory, SLOT(updateImageHistory(QImage)));
+    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getFilterToolSet(), SIGNAL(outputImageChanged(QImage*)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage*)));
+    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getMorphologyToolSet(), SIGNAL(outputImageChanged(QImage*)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage*)));
+    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getTransformationToolSet(), SIGNAL(outputImageChanged(QImage*)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage*)));
+    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getRotationToolSet(), SIGNAL(outputImageChanged(QImage*)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage*)));
+    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getScaleToolSet(), SIGNAL(outputImageChanged(QImage*)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage*)));
+    connect(ui->centralWidget->getImageProcessingToolBoxWidget()->getEdgeDetectionToolSet(), SIGNAL(outputImageChanged(QImage*)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage*)));
 
-    connect(ui->centralWidget->getImageDisplayWidget(), SIGNAL(imageChanged(QImage)),
-            imageChangeHistory, SLOT(updateImageHistory(QImage)));
+    connect(ui->centralWidget->getImageDisplayWidget(), SIGNAL(imageChanged(QImage*)),
+            imageChangeHistory, SLOT(updateImageHistory(QImage*)));
 
-    connect(ui->centralWidget->getImageDisplayWidget()->getImageDisplayLabel(), SIGNAL(selectionUpdated(QRect&)),
-            this, SLOT(enableCropAndROI(QRect&)));
+    connect(ui->centralWidget->getImageDisplayWidget()->getImageDisplayLabel(), SIGNAL(selectionUpdated(QRect*)),
+            this, SLOT(enableCropAndROI(QRect*)));
 
 }
 

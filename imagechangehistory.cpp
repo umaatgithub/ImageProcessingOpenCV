@@ -21,8 +21,8 @@ void ImageChangeHistory::loadImage(const QString &path)
 {
     QDir dir;
     if(dir.exists(path)){
-        QImage image;
-        image.load(path);
+        QImage *image = new QImage;
+        image->load(path);
         if(!imageHistoryList.empty()){
             imageHistoryList.clear();
         }
@@ -39,7 +39,7 @@ void ImageChangeHistory::saveAsImage(const QString &path)
 {
     if(path!=""){
         if(!imageHistoryList.empty()){
-            (*itImageHistoryList).save(path);
+            (*itImageHistoryList)->save(path);
             setImagePath(path);
             imageStatus = SAVED;
         }
@@ -82,7 +82,7 @@ bool ImageChangeHistory::imageExist()
     return true;
 }
 
-void ImageChangeHistory::updateImageHistory(QImage image)
+void ImageChangeHistory::updateImageHistory(QImage *image)
 {
     if(!imageHistoryList.empty()){
         while(itImageHistoryList!=(--imageHistoryList.end())){

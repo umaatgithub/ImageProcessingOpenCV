@@ -1,9 +1,9 @@
 #include "imageprocessingtoolboxwidget.h"
 
 ImageProcessingToolBoxWidget::ImageProcessingToolBoxWidget(QWidget *parent) : QWidget(parent),
-    layout(new QGridLayout), toolBox(new QToolBox), filterToolSet(new FilterWidget),
-    morphologyToolSet(new MorphologyWidget), transformationToolSet(new TransformationWidget),
-    rotationToolSet(new RotationWidget), scaleToolSet(new ScaleWidget), edgeDetectionToolSet(new EdgeDetectionWidget)
+    layout(new QGridLayout), toolBox(new QToolBox), filterToolSet(new FilterWidget(QString("Image Smoothening Filter"))),
+    morphologyToolSet(new MorphologyWidget(QString("Morphology Operation"))), transformationToolSet(new ImageTransformationTool(QString("Image Transformation"))),
+    rotationToolSet(new RotationWidget(QString("Image Rotation"))), scaleToolSet(new ImageScalingTool(QString("Image Scaling"))), edgeDetectionToolSet(new ImageEdgeFilterTool(QString("Edge Detection")))
 {
     setupImageProcessingToolBox();
 }
@@ -27,7 +27,7 @@ void ImageProcessingToolBoxWidget::setupImageProcessingToolBox()
     layout->setRowStretch(0,1);
     setLayout(layout);
 
-    toolBox->addItem(rotationToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Rotation");
+    toolBox->addItem(rotationToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),rotationToolSet->getToolName());
     toolBox->addItem(scaleToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Scaling");
     toolBox->addItem(filterToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Smoothing Filter");
     toolBox->addItem(transformationToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Transformation");
@@ -46,7 +46,7 @@ MorphologyWidget *ImageProcessingToolBoxWidget::getMorphologyToolSet() const
     return morphologyToolSet;
 }
 
-TransformationWidget *ImageProcessingToolBoxWidget::getTransformationToolSet() const
+ImageTransformationTool *ImageProcessingToolBoxWidget::getTransformationToolSet() const
 {
     return transformationToolSet;
 }
@@ -56,18 +56,13 @@ RotationWidget *ImageProcessingToolBoxWidget::getRotationToolSet() const
     return rotationToolSet;
 }
 
-ScaleWidget *ImageProcessingToolBoxWidget::getScaleToolSet() const
+ImageScalingTool *ImageProcessingToolBoxWidget::getScaleToolSet() const
 {
     return scaleToolSet;
 }
 
-EdgeDetectionWidget *ImageProcessingToolBoxWidget::getEdgeDetectionToolSet() const
+ImageEdgeFilterTool *ImageProcessingToolBoxWidget::getEdgeDetectionToolSet() const
 {
     return edgeDetectionToolSet;
-}
-
-void ImageProcessingToolBoxWidget::setEdgeDetectionToolSet(EdgeDetectionWidget *value)
-{
-    edgeDetectionToolSet = value;
 }
 

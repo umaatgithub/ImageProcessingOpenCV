@@ -24,8 +24,8 @@ void CentralGridLayoutWidget::setupWidget()
   layout->setColumnMinimumWidth(0,300);
   layout->setColumnMinimumWidth(2,250);
 
-  layout->setRowMinimumHeight(0,270);
-  layout->setRowMinimumHeight(1,200);
+  layout->setRowMinimumHeight(0,310);
+  layout->setRowMinimumHeight(1,195);
 
   layout->setColumnStretch(0,1);
 

@@ -22,34 +22,30 @@ public:
     void cropDisplayImage();
     void autoContrastDisplayImage();
 
-    QImage getDisplayImage() const;
-    void setDisplayImage(const QImage &value);
-
     float getPercentageZoom() const;
     void setPercentageZoom(float value);
 
     DisplayLabel *getImageDisplayLabel() const;
     void setImageDisplayLabel(DisplayLabel *value);
 
-    QRect getSelectionRect() const;
-    void setSelectionRect(const QRect &value);
+    QImage *getDisplayImage() const;
+    void setDisplayImage(QImage *value);
 
 signals:
-    void imageChanged(QImage);
+    void imageChanged(QImage*);
     void percentageZoomChanged(float);
 
 public slots:
     void updateDisplayArea();
-    void updateDisplayImage(QImage &image, bool newImage);
-    void updateSelectionRect(QRect& rect);
+    void updateDisplayImage(QImage* image, bool newImage);
 
 protected:
     QGridLayout *layout;
     QScrollArea *scrollArea;
     DisplayLabel *imageDisplayLabel;
-    QImage displayImage;
+    QImage *displayImage;\
     float percentageZoom;
-    QRect selectionRect;
+
 };
 
 #endif // IMAGEDISPLAYWIDGET_H

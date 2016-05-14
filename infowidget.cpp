@@ -52,20 +52,20 @@ void InfoWidget::resizeEvent(QResizeEvent * /* event */)
     infoTable->setColumnWidth(1,width()*2.0/3.0);
 }
 
-void InfoWidget::updateImageProperty(QImage &image)
+void InfoWidget::updateImageProperty(QImage *image)
 {
-    infoTable->item(HEIGHT, 1)->setText(QString::number(image.height()));
-    infoTable->item(WIDTH, 1)->setText(QString::number(image.width()));
-    if(image.format()==QImage::Format_RGB32){
+    infoTable->item(HEIGHT, 1)->setText(QString::number(image->height()));
+    infoTable->item(WIDTH, 1)->setText(QString::number(image->width()));
+    if(image->format()==QImage::Format_RGB32){
         infoTable->item(FORMAT,1)->setText(QString("RGB32"));
     }
-    else if(image.format()==QImage::Format_Indexed8){
+    else if(image->format()==QImage::Format_Indexed8){
         infoTable->item(FORMAT,1)->setText(QString("Indexed8"));
     }
-    else if(image.format()==QImage::Format_Grayscale8){
+    else if(image->format()==QImage::Format_Grayscale8){
         infoTable->item(FORMAT,1)->setText(QString("Grayscale8"));
     }
-    else if(image.format()==QImage::Format_RGB888){
+    else if(image->format()==QImage::Format_RGB888){
         infoTable->item(FORMAT,1)->setText(QString("RGB888"));
     }
     else{

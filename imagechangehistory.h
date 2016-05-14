@@ -24,15 +24,15 @@ public:
     bool imageExist();
 
 signals:
-    void imageHistoryUpdated(QImage &image, bool newImage=false);
+    void imageHistoryUpdated(QImage* image, bool newImage=false);
     void imagePathUpdated(QString &path);
 
 public slots:
-    void updateImageHistory(QImage image);
+    void updateImageHistory(QImage* image);
 
 protected:
-    std::list<QImage> imageHistoryList;
-    std::list<QImage>::iterator itImageHistoryList;
+    std::list<QImage*> imageHistoryList;
+    std::list<QImage*>::iterator itImageHistoryList;
     QString imagePath;
     enum ImageStatus{EMPTY=0, NOT_MODIFIED, MODIFIED, SAVED};
     ImageStatus imageStatus;

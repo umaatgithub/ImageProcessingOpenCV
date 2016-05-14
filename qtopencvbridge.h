@@ -14,8 +14,8 @@ public:
     explicit QtOpenCVBridge(QObject *parent = 0);
     ~QtOpenCVBridge();
 
-    QImage Mat2QImage(cv::Mat const& mat);
-    cv::Mat QImage2Mat(QImage const& image);
+    QImage *Mat2QImage(cv::Mat const& mat);
+    cv::Mat QImage2Mat(QImage* image);
 };
 
 #endif // QTOPENCVBRIDGE_H

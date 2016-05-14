@@ -3,16 +3,14 @@
 
 ImageDisplayWidget::ImageDisplayWidget(QWidget *parent) : QWidget(parent),
     layout(new QGridLayout), scrollArea(new QScrollArea),
-    imageDisplayLabel(new DisplayLabel), percentageZoom(0.0)
+    imageDisplayLabel(new DisplayLabel),displayImage(new QImage), percentageZoom(0.0)
 {
-    //connect(this, SIGNAL(imageChanged()),this, SLOT(updateDisplayArea()));
-    connect(getImageDisplayLabel(), SIGNAL(selectionUpdated(QRect&)),
-            this, SLOT(updateSelectionRect(QRect&)));
     setupDisplayArea();
 }
 
 ImageDisplayWidget::~ImageDisplayWidget()
 {
+    delete displayImage;
     delete imageDisplayLabel;
     delete scrollArea;
     delete layout;
@@ -60,11 +58,11 @@ void ImageDisplayWidget::zoomOutDisplayImage()
 
 void ImageDisplayWidget::cropDisplayImage()
 {
-    if(!displayImage.isNull()){
+    if(!displayImage->isNull()){
         QtOpenCVBridge *qtOpenCVBridge = new QtOpenCVBridge;
 
         cv::Mat imageMat =  qtOpenCVBridge->QImage2Mat(displayImage);
-        cv::Rect regionOfInterest(selectionRect.x(), selectionRect.y(), selectionRect.width(), selectionRect.height());
+        cv::Rect regionOfInterest(getImageDisplayLabel()->getSelectionRect()->x(), getImageDisplayLabel()->getSelectionRect()->y(), getImageDisplayLabel()->getSelectionRect()->width(), getImageDisplayLabel()->getSelectionRect()->height());
 
         cv::Mat croppedMat(imageMat, regionOfInterest);
         cv::Mat croppedOutputMat;
@@ -77,7 +75,7 @@ void ImageDisplayWidget::cropDisplayImage()
 
 void ImageDisplayWidget::autoContrastDisplayImage()
 {
-    if(!displayImage.isNull()){
+    if(!displayImage->isNull()){
         QtOpenCVBridge *qtOpenCVBridge = new QtOpenCVBridge;
         cv::Mat inputMat =  qtOpenCVBridge->QImage2Mat(displayImage);
         cv::Mat outputMat = inputMat.clone();
@@ -102,8 +100,8 @@ void ImageDisplayWidget::autoContrastDisplayImage()
 
 void ImageDisplayWidget::updateDisplayArea()
 {
-    if(!displayImage.isNull()){
-        QPixmap pixmap = QPixmap::fromImage(getDisplayImage());
+    if(!displayImage->isNull()){
+        QPixmap pixmap = QPixmap::fromImage(*getDisplayImage());
         pixmap = pixmap.scaled(pixmap.width()*getPercentageZoom()/100,pixmap.height()*getPercentageZoom()/100,Qt::KeepAspectRatio);
         imageDisplayLabel->setFixedWidth(pixmap.width()+ 10);
         imageDisplayLabel->setFixedHeight(pixmap.height()+ 10);
@@ -113,7 +111,7 @@ void ImageDisplayWidget::updateDisplayArea()
     }
 }
 
-void ImageDisplayWidget::updateDisplayImage(QImage &image, bool newImage)
+void ImageDisplayWidget::updateDisplayImage(QImage *image, bool newImage)
 {
     if(newImage==true){
         setPercentageZoom(100.0);
@@ -122,21 +120,14 @@ void ImageDisplayWidget::updateDisplayImage(QImage &image, bool newImage)
     updateDisplayArea();
 }
 
-void ImageDisplayWidget::updateSelectionRect(QRect &rect)
+QImage *ImageDisplayWidget::getDisplayImage() const
 {
-    setSelectionRect(rect);
+    return displayImage;
 }
 
-QRect ImageDisplayWidget::getSelectionRect() const
+void ImageDisplayWidget::setDisplayImage(QImage *value)
 {
-    return selectionRect;
-}
-
-void ImageDisplayWidget::setSelectionRect(const QRect &value)
-{
-    if(value.width()!=0 && value.height()!=0){
-        selectionRect = value;
-    }
+    displayImage = value;
 }
 
 DisplayLabel *ImageDisplayWidget::getImageDisplayLabel() const
@@ -160,13 +151,13 @@ void ImageDisplayWidget::setPercentageZoom(float value)
     emit percentageZoomChanged(value);
 }
 
-QImage ImageDisplayWidget::getDisplayImage() const
-{
-    return displayImage;
-}
+//QImage ImageDisplayWidget::getDisplayImage() const
+//{
+//    return displayImage;
+//}
 
-void ImageDisplayWidget::setDisplayImage(const QImage &value)
-{
-    displayImage = value;
-}
+//void ImageDisplayWidget::setDisplayImage(const QImage &value)
+//{
+//    displayImage = value;
+//}
 

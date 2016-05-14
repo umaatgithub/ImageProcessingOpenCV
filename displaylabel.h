@@ -48,11 +48,11 @@ public:
     float getPercentageZoom() const;
     void setPercentageZoom(float value);
 
-    QRect getSelectionRect() const;
-    void setSelectionRect(const QRect &value);
+    QRect *getSelectionRect() const;
+    void setSelectionRect(QRect* value);
 
 signals:
-    void selectionUpdated(QRect&);
+    void selectionUpdated(QRect*);
 
 public slots:
 
@@ -63,7 +63,7 @@ protected:
     int startX, startY;
     int endX, endY;
     float percentageZoom;
-    QRect selectionRect;
+    QRect* selectionRect;
 };
 
 #endif // DISPLAYLABEL_H

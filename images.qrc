@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/toolbarIcons">
+        <file alias="undo">C:/Users/Umamaheswaran/Desktop/undo.ico</file>
+        <file alias="redo">C:/Users/Umamaheswaran/Desktop/redo.ico</file>
+        <file alias="opennew">C:/Users/Umamaheswaran/Desktop/opennew.ico</file>
+        <file alias="saveas">C:/Users/Umamaheswaran/Desktop/saveas.ico</file>
+        <file alias="crop">C:/Users/Umamaheswaran/Desktop/crop.ico</file>
+        <file alias="roi">C:/Users/Umamaheswaran/Desktop/roi.ico</file>
+        <file alias="select">C:/Users/Umamaheswaran/Desktop/select .ico</file>
+        <file alias="zoomin">C:/Users/Umamaheswaran/Desktop/zoomin.ico</file>
+        <file alias="zoomout">C:/Users/Umamaheswaran/Desktop/zoomout.ico</file>
+    </qresource>
+</RCC>
