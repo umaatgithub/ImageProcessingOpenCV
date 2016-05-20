@@ -14,9 +14,11 @@ class ImageDisplayWidget : public QWidget
 {
     Q_OBJECT
 public:
+    //Constructor and Destructor
     explicit ImageDisplayWidget(QWidget *parent = 0);
     ~ImageDisplayWidget();
-    void setupDisplayArea();
+
+    void setupDisplayArea();                    //Function to setup the display area
     void zoomInDisplayImage();
     void zoomOutDisplayImage();
     void cropDisplayImage();

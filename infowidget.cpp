@@ -1,6 +1,13 @@
 #include "infowidget.h"
 #include <iostream>
 
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class and to setup the UI
+ *
+ **************************************************************************/
 InfoWidget::InfoWidget(QWidget *parent) : QWidget(parent), layout(new QGridLayout),
     infoTable(new QTableWidget)
 {
@@ -14,6 +21,24 @@ InfoWidget::InfoWidget(QWidget *parent) : QWidget(parent), layout(new QGridLayou
     setupWidget();
 }
 
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
+InfoWidget::~InfoWidget()
+{
+    delete infoTable;
+    delete layout;
+}
+
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to setup the UI for the information widget
+ *
+ **************************************************************************/
 void InfoWidget::setupWidget()
 {
     infoTable->verticalHeader()->setVisible(false);

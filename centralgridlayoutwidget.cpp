@@ -1,5 +1,12 @@
 #include "centralgridlayoutwidget.h"
 
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class and to setup the UI
+ *
+ **************************************************************************/
 CentralGridLayoutWidget::CentralGridLayoutWidget(QWidget *parent) : QWidget(parent),
     layout(new QGridLayout), imageDisplayWidget(new ImageDisplayWidget),
     imageProcessingToolBoxWidget(new ImageProcessingToolBoxWidget), infoWidget(new InfoWidget)
@@ -7,6 +14,12 @@ CentralGridLayoutWidget::CentralGridLayoutWidget(QWidget *parent) : QWidget(pare
     setupWidget();
 }
 
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
 CentralGridLayoutWidget::~CentralGridLayoutWidget()
 {
     delete imageProcessingToolBoxWidget;
@@ -15,6 +28,13 @@ CentralGridLayoutWidget::~CentralGridLayoutWidget()
     delete layout;
 }
 
+
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to setup the UI for the central widget
+ *
+ **************************************************************************/
 void CentralGridLayoutWidget::setupWidget()
 {
   layout->addWidget(imageDisplayWidget,0,0,3,2);
@@ -30,19 +50,4 @@ void CentralGridLayoutWidget::setupWidget()
   layout->setColumnStretch(0,1);
 
   setLayout(layout);
-}
-
-ImageDisplayWidget *CentralGridLayoutWidget::getImageDisplayWidget() const
-{
-    return imageDisplayWidget;
-}
-
-ImageProcessingToolBoxWidget *CentralGridLayoutWidget::getImageProcessingToolBoxWidget() const
-{
-    return imageProcessingToolBoxWidget;
-}
-
-QWidget *CentralGridLayoutWidget::getInfoWidget() const
-{
-    return infoWidget;
 }

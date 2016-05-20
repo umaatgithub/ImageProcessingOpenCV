@@ -12,16 +12,20 @@ class ImageChangeHistory : public QObject
 {
     Q_OBJECT
 public:
+    //Constructor and Destructor
     explicit ImageChangeHistory(QObject *parent = 0);
+    ~ImageChangeHistory(){}
 
+    void loadImage(const QString &path);        //Push new image into the list
+    void saveAsImage(const QString &path);      //Save current image
+    void undoHistory();                         //Undo last change
+    void redoHistory();                         //Redo last change undone
+    bool previousChangesSaved();                //Check if previous change is saved
+    bool imageExist();                          //Check if image exists
+
+    //Getting and setting path of the image
     QString getImagePath() const;
     void setImagePath(const QString &value);
-    void loadImage(const QString &path);
-    void saveAsImage(const QString &path);
-    void undoHistory();
-    void redoHistory();
-    bool previousChangesSaved();
-    bool imageExist();
 
 signals:
     void imageHistoryUpdated(QImage* image, bool newImage=false);

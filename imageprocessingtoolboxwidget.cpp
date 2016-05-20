@@ -1,13 +1,26 @@
 #include "imageprocessingtoolboxwidget.h"
 
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class and to setup the UI
+ *
+ **************************************************************************/
 ImageProcessingToolBoxWidget::ImageProcessingToolBoxWidget(QWidget *parent) : QWidget(parent),
-    layout(new QGridLayout), toolBox(new QToolBox), filterToolSet(new FilterWidget(QString("Image Smoothening Filter"))),
-    morphologyToolSet(new MorphologyWidget(QString("Morphology Operation"))), transformationToolSet(new ImageTransformationTool(QString("Image Transformation"))),
-    rotationToolSet(new RotationWidget(QString("Image Rotation"))), scaleToolSet(new ImageScalingTool(QString("Image Scaling"))), edgeDetectionToolSet(new ImageEdgeFilterTool(QString("Edge Detection")))
+    layout(new QGridLayout), toolBox(new QToolBox), filterToolSet(new ImageSmootheningFilterTool(QString("Image Smoothening Filter"))),
+    morphologyToolSet(new ImageMorphologyTool(QString("Morphology Operation"))), transformationToolSet(new ImageTransformationTool(QString("Image Transformation"))),
+    rotationToolSet(new ImageRotationTool(QString("Image Rotation"))), scaleToolSet(new ImageScalingTool(QString("Image Scaling"))), edgeDetectionToolSet(new ImageEdgeFilterTool(QString("Edge Detection")))
 {
     setupImageProcessingToolBox();
 }
 
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
 ImageProcessingToolBoxWidget::~ImageProcessingToolBoxWidget()
 {
     delete edgeDetectionToolSet;
@@ -20,6 +33,12 @@ ImageProcessingToolBoxWidget::~ImageProcessingToolBoxWidget()
     delete layout;
 }
 
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to setup the UI for the tool box
+ *
+ **************************************************************************/
 void ImageProcessingToolBoxWidget::setupImageProcessingToolBox()
 {
     layout->addWidget(toolBox,0,0);
@@ -27,21 +46,21 @@ void ImageProcessingToolBoxWidget::setupImageProcessingToolBox()
     layout->setRowStretch(0,1);
     setLayout(layout);
 
-    toolBox->addItem(rotationToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),rotationToolSet->getToolName());
-    toolBox->addItem(scaleToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Scaling");
-    toolBox->addItem(filterToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Smoothing Filter");
-    toolBox->addItem(transformationToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Image Transformation");
-    toolBox->addItem(morphologyToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Morphology Operation");
-    toolBox->addItem(edgeDetectionToolSet, QIcon(QString("C:\\Users\\Umamaheswaran\\Desktop\\button.png")),"Edge Detection");
+    toolBox->addItem(rotationToolSet, QIcon(":/toolbarIcons/toolseticon"),rotationToolSet->getToolName());
+    toolBox->addItem(scaleToolSet, QIcon(":/toolbarIcons/toolseticon"),scaleToolSet->getToolName());
+    toolBox->addItem(filterToolSet, QIcon(":/toolbarIcons/toolseticon"),filterToolSet->getToolName());
+    toolBox->addItem(transformationToolSet, QIcon(":/toolbarIcons/toolseticon"),transformationToolSet->getToolName());
+    toolBox->addItem(morphologyToolSet, QIcon(":/toolbarIcons/toolseticon"),morphologyToolSet->getToolName());
+    toolBox->addItem(edgeDetectionToolSet, QIcon(":/toolbarIcons/toolseticon"),edgeDetectionToolSet->getToolName());
     toolBox->layout()->setSpacing(0);
 }
 
-FilterWidget *ImageProcessingToolBoxWidget::getFilterToolSet() const
+ImageSmootheningFilterTool *ImageProcessingToolBoxWidget::getFilterToolSet() const
 {
     return filterToolSet;
 }
 
-MorphologyWidget *ImageProcessingToolBoxWidget::getMorphologyToolSet() const
+ImageMorphologyTool *ImageProcessingToolBoxWidget::getMorphologyToolSet() const
 {
     return morphologyToolSet;
 }
@@ -51,7 +70,7 @@ ImageTransformationTool *ImageProcessingToolBoxWidget::getTransformationToolSet(
     return transformationToolSet;
 }
 
-RotationWidget *ImageProcessingToolBoxWidget::getRotationToolSet() const
+ImageRotationTool *ImageProcessingToolBoxWidget::getRotationToolSet() const
 {
     return rotationToolSet;
 }

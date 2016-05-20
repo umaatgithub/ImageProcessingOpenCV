@@ -4,20 +4,22 @@
 #include <QObject>
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
 #include "qtopencvbridge.h"
 
 class ImageRotation : public QObject
 {
     Q_OBJECT
 public:
+    //Constructor & Destructor
     explicit ImageRotation(QObject *parent = 0);
-    ~ImageRotation(){}
+    ~ImageRotation(){ delete qtOpenCVBridge; }
 
-    QImage* applyAntiClockwiseRotation(QImage* inputImage, int radius);
-    QImage* applyClockwiseRotation(QImage* inputImage, int radius);
+    //Function declarations of rotation functions
+    QImage* applyAntiClockwiseRotation(QImage* inputImage, const int &angle) const;
+    QImage* applyClockwiseRotation(QImage* inputImage, const int &angle) const;
 
 protected:
+    //Pointer to QtOpenCVBridge for image conversion between QImage and cv::Mat
     QtOpenCVBridge *qtOpenCVBridge;
 
 };

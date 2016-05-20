@@ -103,6 +103,7 @@ void DisplayLabel::resizeEvent(QResizeEvent *event)
     }
 }
 
+//Getters and setter functions
 int DisplayLabel::getStartX() const
 {
     return startX;

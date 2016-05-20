@@ -1,5 +1,12 @@
 #include "imagetransformationtool.h"
 
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class and to setup the UI
+ *
+ **************************************************************************/
 ImageTransformationTool::ImageTransformationTool(QString name): ImageProcessingToolWidget(name), layout(new QGridLayout),
     transformationTypeLabel(new QLabel), transformationTypeComboBox(new QComboBox),
     thresholdPercentageLabel(new QLabel), thresholdPercentageSpinBox(new QSpinBox),
@@ -9,8 +16,30 @@ ImageTransformationTool::ImageTransformationTool(QString name): ImageProcessingT
     connect(transformationTypeComboBox, SIGNAL(currentIndexChanged(int)),
             this, SLOT(modifyWidgetOptions(int)));
     connect(applyButton, SIGNAL(clicked(bool)), this, SLOT(applyButtonClicked()));
-  }
+}
 
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
+ImageTransformationTool::~ImageTransformationTool()
+{
+    delete applyButton;
+    delete thresholdPercentageSpinBox;
+    delete thresholdPercentageLabel;
+    delete transformationTypeComboBox;
+    delete transformationTypeLabel;
+    delete layout;
+}
+
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to setup the UI for the transformation tool
+ *
+ **************************************************************************/
 void ImageTransformationTool::setupWidget()
 {
     transformationTypeLabel->setText(QString("Transformation Type : "));
@@ -44,6 +73,14 @@ void ImageTransformationTool::setupWidget()
     setLayout(layout);
 }
 
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Slot to handle apply button click. It calls the
+ *                     transformation function corresponding to the user
+ *                     selection
+ *
+ **************************************************************************/
 void ImageTransformationTool::applyButtonClicked()
 {
     try{

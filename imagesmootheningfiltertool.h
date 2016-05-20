@@ -1,5 +1,5 @@
-#ifndef FILTERWIDGET_H
-#define FILTERWIDGET_H
+#ifndef IMAGESMOOTHENINGFILTERTOOL_H
+#define IMAGESMOOTHENINGFILTERTOOL_H
 
 #include <QWidget>
 #include <QGridLayout>
@@ -11,18 +11,25 @@
 #include "imageprocessingtoolwidget.h"
 #include "imagesmootheningfilter.h"
 
-class FilterWidget : public ImageProcessingToolWidget
+class ImageSmootheningFilterTool : public ImageProcessingToolWidget
 {
     Q_OBJECT
 public:
-    explicit FilterWidget(QString name);
+    //Constructor and Destructor
+    explicit ImageSmootheningFilterTool(QString name);
+    ~ImageSmootheningFilterTool();
+
+    //Function to setup the widget
     void setupWidget();
 
 public slots:
+    //Slot for apply button clicked
     void applyButtonClicked();
+    //Slot for updating ROI check box when region is updated
     void updateCheckBox();
 
 protected:
+    //Widget layout and elements
     QGridLayout *layout;
     QLabel *filterTypeLabel;
     QComboBox *filterTypeComboBox;
@@ -37,4 +44,4 @@ protected:
     ImageSmootheningFilter filterImage;
 };
 
-#endif // FILTERWIDGET_H
+#endif // IMAGESMOOTHENINGFILTERTOOL_H

@@ -4,21 +4,23 @@
 #include <QObject>
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
 #include "qtopencvbridge.h"
 
 class ImageEdgeFilter : public QObject
 {
     Q_OBJECT
 public:
+    //Constructor & Destructor
     explicit ImageEdgeFilter(QObject *parent = 0);
-    ~ImageEdgeFilter(){}
+    ~ImageEdgeFilter(){ delete qtOpenCVBridge; }
 
-    QImage* applyCannysEdgeDetector(QImage* inputImage, int radius);
-    QImage* applySobelEdgeDetector(QImage* inputImage, int radius);
-    QImage* applyScharrEdgeDetector(QImage* inputImage, int radius);
+    //Function declarations of edge detectors
+    QImage* applyCannysEdgeDetector(QImage* inputImage) const;
+    QImage* applySobelEdgeDetector(QImage* inputImage) const;
+    QImage* applyScharrEdgeDetector(QImage* inputImage) const;
 
 protected:
+    //Pointer to QtOpenCVBridge for image conversion between QImage and cv::Mat
     QtOpenCVBridge *qtOpenCVBridge;
 
 };

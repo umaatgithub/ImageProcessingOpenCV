@@ -1,15 +1,44 @@
 #include "imagerotationtool.h"
 
-RotationWidget::RotationWidget(QString name): ImageProcessingToolWidget(name), layout(new QGridLayout),
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class and to setup the UI
+ *
+ **************************************************************************/
+ImageRotationTool::ImageRotationTool(QString name): ImageProcessingToolWidget(name), layout(new QGridLayout),
     directionLabel(new QLabel), directionComboBox(new QComboBox),
     angleLabel(new QLabel), angleSpinBox(new QSpinBox),
     applyButton(new QPushButton)
   {
     setupWidget();
     connect(applyButton, SIGNAL(clicked(bool)), this, SLOT(applyButtonClicked()));
-  }
+}
 
-void RotationWidget::setupWidget()
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
+ImageRotationTool::~ImageRotationTool()
+{
+    delete applyButton;
+    delete angleSpinBox;
+    delete angleLabel;
+    delete directionComboBox;
+    delete directionLabel;
+    delete layout;
+}
+
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to setup the UI for the rotation tool
+ *
+ **************************************************************************/
+void ImageRotationTool::setupWidget()
 {
     directionLabel->setText(QString("Direction : "));
     directionLabel->setFixedHeight(25);
@@ -41,7 +70,15 @@ void RotationWidget::setupWidget()
     setLayout(layout);
 }
 
-void RotationWidget::applyButtonClicked()
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Slot to handle apply button click. It calls the
+ *                     rotation function corresponding to the user
+ *                     selection
+ *
+ **************************************************************************/
+void ImageRotationTool::applyButtonClicked()
 {
     try{
         emit statusChanged(QString(" Processing image..."), Qt::blue);

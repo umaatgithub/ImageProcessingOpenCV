@@ -1,6 +1,13 @@
 #include "imagemorphologytool.h"
 
-MorphologyWidget::MorphologyWidget(QString name):ImageProcessingToolWidget(name), layout(new QGridLayout),
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class and to setup the UI
+ *
+ **************************************************************************/
+ImageMorphologyTool::ImageMorphologyTool(QString name):ImageProcessingToolWidget(name), layout(new QGridLayout),
     morphologyTypeLabel(new QLabel), morphologyTypeComboBox(new QComboBox),
     morphologyRadiusLabel(new QLabel), morphologyRadiusSpinBox(new QSpinBox), roiLabel(new QLabel), roiCheckBox(new QCheckBox),
     applyButton(new QPushButton)
@@ -11,7 +18,31 @@ MorphologyWidget::MorphologyWidget(QString name):ImageProcessingToolWidget(name)
     connect(this, SIGNAL(inputImageChanged(QImage*)), this, SLOT(updateCheckBox()));
 }
 
-void MorphologyWidget::setupWidget()
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
+ImageMorphologyTool::~ImageMorphologyTool()
+{
+    delete applyButton;
+    delete roiCheckBox;
+    delete roiLabel;
+    delete morphologyRadiusSpinBox;
+    delete morphologyRadiusLabel;
+    delete morphologyTypeComboBox;
+    delete morphologyTypeLabel;
+    delete layout;
+}
+
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to setup the UI for the morphology tool
+ *
+ **************************************************************************/
+void ImageMorphologyTool::setupWidget()
 {
     morphologyTypeLabel->setText(QString("Morphology Type : "));
     morphologyTypeLabel->setFixedHeight(25);
@@ -53,7 +84,15 @@ void MorphologyWidget::setupWidget()
     setLayout(layout);
 }
 
-void MorphologyWidget::applyButtonClicked()
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Slot to handle apply button click. It calls the
+ *                     morphology function corresponding to the user
+ *                     selection
+ *
+ **************************************************************************/
+void ImageMorphologyTool::applyButtonClicked()
 {
     try{
         emit statusChanged(QString(" Processing image..."), Qt::blue);
@@ -101,7 +140,7 @@ void MorphologyWidget::applyButtonClicked()
     }
 }
 
-void MorphologyWidget::updateCheckBox()
+void ImageMorphologyTool::updateCheckBox()
 {
     if(!getRoiRect()->isNull() && isRoiRectValid()){
         roiCheckBox->setEnabled(true);

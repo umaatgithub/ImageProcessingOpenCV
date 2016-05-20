@@ -1,10 +1,30 @@
 #include "imageprocessingtoolwidget.h"
 
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class
+ *
+ **************************************************************************/
 ImageProcessingToolWidget::ImageProcessingToolWidget(QString name, QWidget *parent) : QWidget(parent),
     toolName(name), inputImage(new QImage), outputImage(new QImage), roiRect(new QRect)
 {
 
 }
+
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
+//ImageProcessingToolWidget::~ImageProcessingToolWidget()
+//{
+//    delete roiRect;
+//    delete outputImage;
+//    delete inputImage;
+//}
 
 QImage *ImageProcessingToolWidget::getInputImage() const
 {

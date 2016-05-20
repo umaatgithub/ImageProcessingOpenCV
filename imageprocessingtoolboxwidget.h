@@ -15,24 +15,27 @@ class ImageProcessingToolBoxWidget : public QWidget
 {
     Q_OBJECT
 public:
+    //Constructor and Destructor
     explicit ImageProcessingToolBoxWidget(QWidget *parent = 0);
     ~ImageProcessingToolBoxWidget();
+
+    //Function to setup the toolbox
     void setupImageProcessingToolBox();
 
-    FilterWidget *getFilterToolSet() const;
-    MorphologyWidget *getMorphologyToolSet() const;
+    ImageSmootheningFilterTool *getFilterToolSet() const;
+    ImageMorphologyTool *getMorphologyToolSet() const;
     ImageTransformationTool *getTransformationToolSet() const;
-    RotationWidget *getRotationToolSet() const;
+    ImageRotationTool *getRotationToolSet() const;
     ImageScalingTool *getScaleToolSet() const;
     ImageEdgeFilterTool *getEdgeDetectionToolSet() const;
 
 protected:
     QGridLayout *layout;
     QToolBox *toolBox;
-    FilterWidget *filterToolSet;
-    MorphologyWidget *morphologyToolSet;
+    ImageSmootheningFilterTool *filterToolSet;
+    ImageMorphologyTool *morphologyToolSet;
     ImageTransformationTool *transformationToolSet;
-    RotationWidget *rotationToolSet;
+    ImageRotationTool *rotationToolSet;
     ImageScalingTool *scaleToolSet;
     ImageEdgeFilterTool *edgeDetectionToolSet;
 

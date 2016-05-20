@@ -1,6 +1,13 @@
 #include "imagesmootheningfiltertool.h"
 
-FilterWidget::FilterWidget(QString name): ImageProcessingToolWidget(name), layout(new QGridLayout),
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class and to setup the UI
+ *
+ **************************************************************************/
+ImageSmootheningFilterTool::ImageSmootheningFilterTool(QString name): ImageProcessingToolWidget(name), layout(new QGridLayout),
     filterTypeLabel(new QLabel), filterTypeComboBox(new QComboBox),
     filterRadiusLabel(new QLabel), filterRadiusSpinBox(new QSpinBox), roiLabel(new QLabel), roiCheckBox(new QCheckBox),
     applyButton(new QPushButton)
@@ -11,7 +18,32 @@ FilterWidget::FilterWidget(QString name): ImageProcessingToolWidget(name), layou
     connect(this, SIGNAL(inputImageChanged(QImage*)), this, SLOT(updateCheckBox()));
 }
 
-void FilterWidget::setupWidget()
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
+ImageSmootheningFilterTool::~ImageSmootheningFilterTool()
+{
+    delete applyButton;
+    delete roiCheckBox;
+    delete roiLabel;
+    delete filterRadiusSpinBox;
+    delete filterRadiusLabel;
+    delete filterTypeComboBox;
+    delete filterTypeLabel;
+    delete layout;
+}
+
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to setup the UI for the smoothening filter
+ *                     tool
+ *
+ **************************************************************************/
+void ImageSmootheningFilterTool::setupWidget()
 {
     filterTypeLabel->setText(QString("Filter Type : "));
     filterTypeLabel->setFixedHeight(25);
@@ -54,7 +86,15 @@ void FilterWidget::setupWidget()
     setLayout(layout);
 }
 
-void FilterWidget::applyButtonClicked()
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Slot to handle apply button click. It calls the
+ *                     smoothening filter function corresponding to the
+ *                     user selection
+ *
+ **************************************************************************/
+void ImageSmootheningFilterTool::applyButtonClicked()
 {
     try{
         emit statusChanged(QString(" Processing image..."), Qt::blue);
@@ -102,7 +142,7 @@ void FilterWidget::applyButtonClicked()
     }
 }
 
-void FilterWidget::updateCheckBox()
+void ImageSmootheningFilterTool::updateCheckBox()
 {
     if(!getRoiRect()->isNull() && isRoiRectValid()){
         roiCheckBox->setEnabled(true);

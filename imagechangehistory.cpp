@@ -1,22 +1,24 @@
 #include "imagechangehistory.h"
 
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize the member variables of
+ *                     the class
+ *
+ **************************************************************************/
 ImageChangeHistory::ImageChangeHistory(QObject *parent) : QObject(parent),
     imageStatus(EMPTY)
 {
 
 }
 
-QString ImageChangeHistory::getImagePath() const
-{
-    return imagePath;
-}
-
-void ImageChangeHistory::setImagePath(const QString &value)
-{
-    imagePath = value;
-    emit imagePathUpdated(imagePath);
-}
-
+/***************************************************************************
+ * Input argument(s) : const QString &path : Path of the image to be loaded
+ * Return type       : void
+ * Functionality     : Function to clear the history list and push the
+ *                     newly added image into the list
+ **************************************************************************/
 void ImageChangeHistory::loadImage(const QString &path)
 {
     QDir dir;
@@ -35,6 +37,12 @@ void ImageChangeHistory::loadImage(const QString &path)
 
 }
 
+/***************************************************************************
+ * Input argument(s) : const QString &path : Path where the image is to
+ *                     saved
+ * Return type       : void
+ * Functionality     : Function to save the current image to the given path
+ **************************************************************************/
 void ImageChangeHistory::saveAsImage(const QString &path)
 {
     if(path!=""){
@@ -46,6 +54,11 @@ void ImageChangeHistory::saveAsImage(const QString &path)
     }
 }
 
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to undo the recent change done to the image
+ **************************************************************************/
 void ImageChangeHistory::undoHistory()
 {
     if(!imageHistoryList.empty()){
@@ -56,6 +69,11 @@ void ImageChangeHistory::undoHistory()
     }
 }
 
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to redo the last change undone
+ **************************************************************************/
 void ImageChangeHistory::redoHistory()
 {
     if(!imageHistoryList.empty()){
@@ -66,6 +84,11 @@ void ImageChangeHistory::redoHistory()
     }
 }
 
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : bool - Image saved flag
+ * Functionality     : Function to check if the last change done was saved
+ **************************************************************************/
 bool ImageChangeHistory::previousChangesSaved()
 {
     if(imageStatus == MODIFIED){
@@ -74,6 +97,12 @@ bool ImageChangeHistory::previousChangesSaved()
     return true;
 }
 
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : bool - Image exists flad
+ * Functionality     : Function to check if the the image change history is
+ *                     empty or not
+ **************************************************************************/
 bool ImageChangeHistory::imageExist()
 {
     if(imageStatus == EMPTY){
@@ -82,6 +111,11 @@ bool ImageChangeHistory::imageExist()
     return true;
 }
 
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Slot to push new image to the image history list
+ **************************************************************************/
 void ImageChangeHistory::updateImageHistory(QImage *image)
 {
     if(!imageHistoryList.empty()){
@@ -93,11 +127,17 @@ void ImageChangeHistory::updateImageHistory(QImage *image)
         imageStatus = MODIFIED;
         emit imageHistoryUpdated(image);
     }
-//    imageHistoryList.push_back(image);
-//    ++itImageHistoryList;
-//    imageHistoryList.
-//    imageQueue.push(image);
-//    emit imageHistoryUpdated(image);
 
 }
 
+//Getter and setter functions definition
+QString ImageChangeHistory::getImagePath() const
+{
+    return imagePath;
+}
+
+void ImageChangeHistory::setImagePath(const QString &value)
+{
+    imagePath = value;
+    emit imagePathUpdated(imagePath);
+}

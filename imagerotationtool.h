@@ -10,18 +10,23 @@
 #include "imageprocessingtoolwidget.h"
 #include "imagerotation.h"
 
-class RotationWidget : public ImageProcessingToolWidget
+class ImageRotationTool : public ImageProcessingToolWidget
 {
     Q_OBJECT
 public:
-    explicit RotationWidget(QString name);
+    //Constructor and Destructor
+    explicit ImageRotationTool(QString name);
+    ~ImageRotationTool();
 
+    //Function to setup the widget
     void setupWidget();
 
 public slots:
+    //Slot for apply button clicked
     void applyButtonClicked();
 
 protected:
+    //Widget layout and elements
     QGridLayout *layout;
     QLabel *directionLabel;
     QComboBox *directionComboBox;

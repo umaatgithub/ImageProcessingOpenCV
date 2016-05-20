@@ -1,5 +1,12 @@
 #include "imagescalingtool.h"
 
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class and to setup the UI
+ *
+ **************************************************************************/
 ImageScalingTool::ImageScalingTool(QString name): ImageProcessingToolWidget(name), layout(new QGridLayout),
     scaleTypeLabel(new QLabel), scaleTypeComboBox(new QComboBox),
     scalePercentageLabel(new QLabel), scalePercentageSpinBox(new QSpinBox),
@@ -7,8 +14,30 @@ ImageScalingTool::ImageScalingTool(QString name): ImageProcessingToolWidget(name
   {
     setupWidget();
     connect(applyButton, SIGNAL(clicked(bool)), this, SLOT(applyButtonClicked()));
-  }
+}
 
+/***************************************************************************
+ * Input argument(s) : NIL
+ * Return type       : NIL
+ * Functionality     : Destructor to delete all the pointer variables
+ *
+ **************************************************************************/
+ImageScalingTool::~ImageScalingTool()
+{
+    delete applyButton;
+    delete scalePercentageSpinBox;
+    delete scalePercentageLabel;
+    delete scaleTypeComboBox;
+    delete scaleTypeLabel;
+    delete layout;
+}
+
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Function to setup the UI for the scaling tool
+ *
+ **************************************************************************/
 void ImageScalingTool::setupWidget()
 {
     scaleTypeLabel->setText(QString("Scale Type : "));
@@ -41,6 +70,14 @@ void ImageScalingTool::setupWidget()
     setLayout(layout);
 }
 
+/***************************************************************************
+ * Input argument(s) : void
+ * Return type       : void
+ * Functionality     : Slot to handle apply button click. It calls the
+ *                     scaling function corresponding to the user
+ *                     selection
+ *
+ **************************************************************************/
 void ImageScalingTool::applyButtonClicked()
 {
     try{

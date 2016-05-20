@@ -15,10 +15,12 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    //Constructor and Destructor
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
+    //Slots for tool bar actions
     void on_actionNew_triggered();
     void on_actionUndo_triggered();
     void on_actionRedo_triggered();
@@ -30,19 +32,19 @@ private slots:
     void on_actionRegion_Of_Interest_triggered();
     void on_actionContrast_triggered();
 
-    void updateZoomStatus(float value);
-    void updateStatusBar(QString status, QColor statusColor);
 
-    void enableCropAndROI(QRect* selectionRect);
+    void updateZoomStatus(float value);                         //Slot to update the zoom value displayed in status bar
+    void updateStatusBar(QString status, QColor statusColor);   //Slot to display temporary messages in status bar
+    void enableCropAndROI(QRect* selectionRect);                //Slot to enable crop and ROI tool bar action
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui;                          //Pointer to mainwindow ui
 
 protected:
-    ImageChangeHistory *imageChangeHistory;
-    QLabel *percentageZoomLabel;
+    ImageChangeHistory *imageChangeHistory;     //Pointer to ImageChangeHistory for storing images
+    QLabel *percentageZoomLabel;                //Status bar label for displaying image zoom
 
-    void connectSignalsAndSlots();
+    void connectSignalsAndSlots();              //Connect all signals and slots
 };
 
 #endif // MAINWINDOW_H

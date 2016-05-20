@@ -4,21 +4,23 @@
 #include <QObject>
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
 #include "qtopencvbridge.h"
 
 class ImageTransformation : public QObject
 {
     Q_OBJECT
 public:
+    //Constructor and Destructor
     explicit ImageTransformation(QObject *parent = 0);
-    ~ImageTransformation(){}
+    ~ImageTransformation(){ delete qtOpenCVBridge; }
 
-    QImage* applyBinaryTransformation(QImage* inputImage, const int& radius);
-    QImage* applyGrayscaleTransformation(QImage* inputImage);
-    QImage* applyNegativeTransformation(QImage* inputImage, const int& radius);
+    //Function declarations of transformation functions
+    QImage* applyBinaryTransformation(QImage* inputImage, const int& percentage) const;
+    QImage* applyGrayscaleTransformation(QImage* inputImage) const;
+    QImage* applyNegativeTransformation(QImage* inputImage, const int& percentage) const;
 
 protected:
+    //Pointer to QtOpenCVBridge for image conversion between QImage and cv::Mat
     QtOpenCVBridge *qtOpenCVBridge;
 
 };

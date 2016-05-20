@@ -1,12 +1,25 @@
 #include "imageedgefilter.h"
 
+/***************************************************************************
+ * Input argument(s) : QObject *parent - Passed to base class constructor
+ * Return type       : NIL
+ * Functionality     : Constructor to initialize all the member variables
+ *                     of the class
+ *
+ **************************************************************************/
 ImageEdgeFilter::ImageEdgeFilter(QObject *parent) : QObject(parent),
     qtOpenCVBridge(new QtOpenCVBridge)
 {
 
 }
 
-QImage *ImageEdgeFilter::applyCannysEdgeDetector(QImage *inputImage, int radius)
+/***************************************************************************
+ * Input argument(s) : QImage *inputImage - Input image for the filter
+ * Return type       : QImage* - Output image after Canny edge detection
+ * Functionality     : Function to apply Canny's edge detection on the
+ *                     given input image and returns the processed image
+ **************************************************************************/
+QImage *ImageEdgeFilter::applyCannysEdgeDetector(QImage *inputImage) const
 {
     cv::Mat inputMat = qtOpenCVBridge->QImage2Mat(inputImage);
     cv::Mat outputMat ;
@@ -17,7 +30,13 @@ QImage *ImageEdgeFilter::applyCannysEdgeDetector(QImage *inputImage, int radius)
     return qtOpenCVBridge->Mat2QImage(outputMat);
 }
 
-QImage *ImageEdgeFilter::applySobelEdgeDetector(QImage *inputImage, int radius)
+/***************************************************************************
+ * Input argument(s) : QImage *inputImage - Input image for the filter
+ * Return type       : QImage* - Output image after Sobel edge detection
+ * Functionality     : Function to apply Sobel edge detection on the
+ *                     given input image and returns the processed image
+ **************************************************************************/
+QImage *ImageEdgeFilter::applySobelEdgeDetector(QImage *inputImage) const
 {
     cv::Mat inputMat = qtOpenCVBridge->QImage2Mat(inputImage);
     cv::Mat outputMat ;
@@ -27,22 +46,23 @@ QImage *ImageEdgeFilter::applySobelEdgeDetector(QImage *inputImage, int radius)
     cv::Mat gradientX, gradientY;
     cv::Mat absGradientX, absGradientY;
 
-    /// Gradient X
-    //Scharr( src_gray, grad_x, ddepth, 1, 0, scale, delta, BORDER_DEFAULT );
     Sobel( inputMat, gradientX, CV_8UC1, 1, 0, 3, 1, 0, cv::BORDER_DEFAULT );
     convertScaleAbs( gradientX, absGradientX );
 
-    /// Gradient Y
-    //Scharr( src_gray, grad_y, ddepth, 0, 1, scale, delta, BORDER_DEFAULT );
     Sobel( inputMat, gradientY, CV_8UC1, 0, 1, 3, 1, 0, cv::BORDER_DEFAULT );
     convertScaleAbs( gradientY, absGradientY );
 
-    /// Total Gradient (approximate)
     addWeighted( absGradientX, 0.5, absGradientY, 0.5, 0, outputMat );
     return qtOpenCVBridge->Mat2QImage(outputMat);
 }
 
-QImage *ImageEdgeFilter::applyScharrEdgeDetector(QImage *inputImage, int radius)
+/***************************************************************************
+ * Input argument(s) : QImage *inputImage - Input image for the filter
+ * Return type       : QImage* - Output image after Scharr edge detection
+ * Functionality     : Function to apply Scharr edge detection on the
+ *                     given input image and returns the processed image
+ **************************************************************************/
+QImage *ImageEdgeFilter::applyScharrEdgeDetector(QImage *inputImage) const
 {
     cv::Mat inputMat = qtOpenCVBridge->QImage2Mat(inputImage);
     cv::Mat outputMat ;
@@ -52,17 +72,15 @@ QImage *ImageEdgeFilter::applyScharrEdgeDetector(QImage *inputImage, int radius)
     cv::Mat gradientX, gradientY;
     cv::Mat absGradientX, absGradientY;
 
-    /// Gradient X
-    //Scharr( src_gray, grad_x, ddepth, 1, 0, scale, delta, BORDER_DEFAULT );
+    // Gradient X
     Scharr( inputMat, gradientX, CV_8UC1, 1, 0, 1, 0, cv::BORDER_DEFAULT );
     convertScaleAbs( gradientX, absGradientX );
 
-    /// Gradient Y
-    //Scharr( src_gray, grad_y, ddepth, 0, 1, scale, delta, BORDER_DEFAULT );
+    // Gradient Y
     Scharr( inputMat, gradientY, CV_8UC1, 0, 1, 1, 0, cv::BORDER_DEFAULT );
     convertScaleAbs( gradientY, absGradientY );
 
-    /// Total Gradient (approximate)
+    // Total Gradient (approximate)
     addWeighted( absGradientX, 0.5, absGradientY, 0.5, 0, outputMat );
     return qtOpenCVBridge->Mat2QImage(outputMat);
 }

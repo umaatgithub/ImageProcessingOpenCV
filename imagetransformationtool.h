@@ -14,14 +14,21 @@ class ImageTransformationTool : public ImageProcessingToolWidget
 {
     Q_OBJECT
 public:
+    //Constructor and Destructor
     explicit ImageTransformationTool(QString name);
+    ~ImageTransformationTool();
+
+    //Function to setup the widget
     void setupWidget();
 
 public slots:
+    //Slot for apply button clicked
     void applyButtonClicked();
+    //Slot called when selection is changed in transformation type combo box
     void modifyWidgetOptions(int currentIndex);
 
 protected:
+    //Widget layout and elements
     QGridLayout *layout;
     QLabel *transformationTypeLabel;
     QComboBox *transformationTypeComboBox;

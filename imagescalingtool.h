@@ -14,13 +14,19 @@ class ImageScalingTool : public ImageProcessingToolWidget
 {
     Q_OBJECT
 public:
+    //Constructor and Destructor
     explicit ImageScalingTool(QString name);
+    ~ImageScalingTool();
+
+    //Function to setup the widget
     void setupWidget();
 
 public slots:
+    //Slot for apply button clicked
     void applyButtonClicked();
 
 protected:
+    //Widget layout and elements
     QGridLayout *layout;
     QLabel *scaleTypeLabel;
     QComboBox *scaleTypeComboBox;

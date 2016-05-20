@@ -11,18 +11,25 @@
 #include "imageprocessingtoolwidget.h"
 #include "imagemorphology.h"
 
-class MorphologyWidget : public ImageProcessingToolWidget
+class ImageMorphologyTool : public ImageProcessingToolWidget
 {
     Q_OBJECT
 public:
-    explicit MorphologyWidget(QString name);
+    //Constructor and Destructor
+    explicit ImageMorphologyTool(QString name);
+    ~ImageMorphologyTool();
+
+    //Function to setup the widget
     void setupWidget();
 
 public slots:
+    //Slot for apply button clicked
     void applyButtonClicked();
+    //Slot for updating ROI check box when region is updated
     void updateCheckBox();
 
 protected:
+    //Widget layout and elements
     QGridLayout *layout;
     QLabel *morphologyTypeLabel;
     QComboBox *morphologyTypeComboBox;

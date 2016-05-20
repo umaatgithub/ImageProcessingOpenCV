@@ -4,22 +4,24 @@
 #include <QObject>
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
 #include "qtopencvbridge.h"
 
 class ImageMorphology : public QObject
 {
     Q_OBJECT
 public:
+    //Constructor & Destructor
     explicit ImageMorphology(QObject *parent = 0);
-    ~ImageMorphology(){}
+    ~ImageMorphology(){ delete qtOpenCVBridge; }
 
-    QImage* applyErode(QImage* inputImage, int radius, bool roiFlag=false, QRect* roiRect=NULL);
-    QImage* applyDilate(QImage* inputImage, int radius, bool roiFlag=false, QRect* roiRect=NULL);
-    QImage* applyOpening(QImage* inputImage, int radius, bool roiFlag=false, QRect* roiRect=NULL);
-    QImage* applyClosing(QImage* inputImage, int radius, bool roiFlag=false, QRect* roiRect=NULL);
+    //Function declarations of morphology operators
+    QImage* applyErode(QImage* inputImage, const int &radius, const bool &roiFlag=false, QRect* roiRect=NULL) const;
+    QImage* applyDilate(QImage* inputImage, const int &radius, const bool &roiFlag=false, QRect* roiRect=NULL) const;
+    QImage* applyOpening(QImage* inputImage, const  int &radius, const bool &roiFlag=false, QRect* roiRect=NULL) const;
+    QImage* applyClosing(QImage* inputImage, const int &radius, const bool &roiFlag=false, QRect* roiRect=NULL) const;
 
 protected:
+    //Pointer to QtOpenCVBridge for image conversion between QImage and cv::Mat
     QtOpenCVBridge *qtOpenCVBridge;
 
 };

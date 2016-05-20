@@ -4,22 +4,24 @@
 #include <QObject>
 #include <QImage>
 #include "opencv2/imgproc/imgproc.hpp"
-#include "opencv2/highgui/highgui.hpp"
 #include "qtopencvbridge.h"
 
 class ImageSmootheningFilter : public QObject
 {
     Q_OBJECT
 public:
+    //Constructor & Destructor
     explicit ImageSmootheningFilter(QObject *parent = 0);
-    ~ImageSmootheningFilter(){}
+    ~ImageSmootheningFilter(){ delete qtOpenCVBridge; }
 
-    QImage* applyNormalizedBoxFilter(QImage* inputImage, int radius, bool roiFlag=false, QRect* roiRect=NULL) const;
-    QImage* applyGaussianFilter(QImage* inputImage, int radius, bool roiFlag=false, QRect* roiRect=NULL) const;
-    QImage* applyMedianFilter(QImage* inputImage, int radius, bool roiFlag=false, QRect* roiRect=NULL) const;
-    QImage* applyBilateralFilter(QImage* inputImage, int radius, bool roiFlag=false, QRect* roiRect=NULL) const;
+    //Function declarations of smoothening filters
+    QImage* applyNormalizedBoxFilter(QImage* inputImage, const int &radius, const bool &roiFlag=false, QRect* roiRect=NULL) const;
+    QImage* applyGaussianFilter(QImage* inputImage, const int &radius, const bool &roiFlag=false, QRect* roiRect=NULL) const;
+    QImage* applyMedianFilter(QImage* inputImage, const int &radius, const bool &roiFlag=false, QRect* roiRect=NULL) const;
+    QImage* applyBilateralFilter(QImage* inputImage, const int &radius, const bool &roiFlag=false, QRect* roiRect=NULL) const;
 
 protected:
+    //Pointer to QtOpenCVBridge for image conversion between QImage and cv::Mat
     QtOpenCVBridge *qtOpenCVBridge;
 
 };

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Image Processing OpenCV</string>
   </property>
   <widget class="CentralGridLayoutWidget" name="centralWidget"/>
   <widget class="QMenuBar" name="menuBar">
@@ -161,7 +161,7 @@
     <bool>false</bool>
    </property>
    <property name="icon">
-    <iconset>
+    <iconset resource="images.qrc">
      <normaloff>:/toolbarIcons/roi</normaloff>:/toolbarIcons/roi</iconset>
    </property>
    <property name="text">
@@ -173,8 +173,8 @@
   </action>
   <action name="actionContrast">
    <property name="icon">
-    <iconset>
-     <normaloff>C:/Users/Umamaheswaran/Desktop/Contrast.ico</normaloff>C:/Users/Umamaheswaran/Desktop/Contrast.ico</iconset>
+    <iconset resource="images.qrc">
+     <normaloff>:/toolbarIcons/contrast</normaloff>:/toolbarIcons/contrast</iconset>
    </property>
    <property name="text">
     <string>Contrast</string>

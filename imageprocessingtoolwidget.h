@@ -7,23 +7,24 @@ class ImageProcessingToolWidget : public QWidget
 {
     Q_OBJECT
 public:
+    //Constructor and Destructor
     explicit ImageProcessingToolWidget(QString name, QWidget *parent = 0);
+    //~ImageProcessingToolWidget();
 
     QImage *getInputImage() const;
-    void setInputImage(QImage *value);
-
     QImage *getOutputImage() const;
-    void setOutputImage(QImage *value);
-
-    virtual void setupWidget()=0;
-
     QString getToolName() const;
-    void setToolName(const QString &value);
-
     QRect *getRoiRect() const;
+
+    void setInputImage(QImage *value);
+    void setOutputImage(QImage *value);
+    void setToolName(const QString &value);
     void setRoiRect(QRect *value);
 
     bool isRoiRectValid();
+
+    //Virtual function to be implemented in derived classes to setup the widget
+    virtual void setupWidget()=0;
 
 signals:
     void outputImageChanged(QImage* image);
